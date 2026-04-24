@@ -15,7 +15,7 @@ export default function NavBar() {
           </span>
         </Link>
         <div className="flex-1 flex justify-center">
-          <div className="flex items-center border rounded-lg px-3 py-1 w-[350px] bg-gray-100">
+          <div className="flex items-center border rounded-lg px-3 py-1 w-[350px] bg-gray-100 space-betwe">
             <IoSearchOutline size={18} className="text-gray-500" />
             <input
               type="text"
