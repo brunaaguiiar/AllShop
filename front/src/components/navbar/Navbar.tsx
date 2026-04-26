@@ -15,7 +15,7 @@ export default function NavBar() {
           </span>
         </Link>
         <div className="flex-1 flex justify-center">
-          <div className="flex items-center border rounded-lg px-3 py-1 w-[350px] bg-gray-100 space-betwe">
+          <div className="flex items-center border rounded-lg px-3 py-1 w-[350px] bg-gray-100">
             <IoSearchOutline size={18} className="text-gray-500" />
             <input
               type="text"
@@ -27,9 +27,9 @@ export default function NavBar() {
         <div className="flex items-center gap-3">
           <button
             className="bg-orange-500 text-white px-5 py-2.5 rounded-xl font-semibold 
-hover:bg-orange-600 transition-all duration-200 
-hover:scale-105 active:scale-95 
-shadow-md hover:shadow-lg cursor-pointer"
+            hover:bg-orange-600 transition-all duration-200 
+            hover:scale-105 active:scale-95 
+            shadow-md hover:shadow-lg cursor-pointer"
           >
             Entrar na sua conta
           </button>
