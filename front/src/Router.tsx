@@ -3,6 +3,7 @@ import Home from "./screens/home/Home";
 import NavBar from "./components/navbar/Navbar";
 import Login from "./screens/login/Login";
 import Cadastro from "./screens/cadastro/Cadastro";
+import RecuperarSenha from "./screens/recuperarSenha/RecuperarSenha";
 
 const ProtectedLayout = () => {
   return (
@@ -20,6 +21,7 @@ export default function Router() {
     
     <Routes>
     <Route path="/login" element={<Login />} />
+    <Route path="/recuperar-senha" element={<RecuperarSenha />} />
     <Route path="/Cadastro" element={<Cadastro />} />
       <Route element={<ProtectedLayout />}>
         <Route path="/" element={<Navigate to="/home" />} />

@@ -1,8 +1,11 @@
 import { CiShoppingCart } from "react-icons/ci";
 import { IoMenuOutline, IoSearchOutline } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function NavBar() {
+
+  const navigate = useNavigate();
+
   return (
     <header className="w-full bg-white border-b">
       <nav className="w-full flex items-center justify-between px-6 py-3">
@@ -26,6 +29,7 @@ export default function NavBar() {
         </div>
         <div className="flex items-center gap-3">
           <button
+          onClick={() => navigate("/login")}
             className="bg-orange-500 text-white px-5 py-2.5 rounded-xl font-semibold 
             hover:bg-orange-600 transition-all duration-200 
             hover:scale-105 active:scale-95 
