@@ -1,54 +1,74 @@
 import { CiShoppingCart } from "react-icons/ci";
-import { IoMenuOutline, IoSearchOutline } from "react-icons/io5";
-import { Link, useNavigate } from "react-router-dom";
+import { IoMenuOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
+import { Button, Link } from "@heroui/react";
+import { LuDoorClosed, LuDoorOpen } from "react-icons/lu";
 
 export default function NavBar() {
+  const links = [
+    { name: "Início", href: "/home" },
+    { name: "Produtos", href: "/produtos" },
+    { name: "Sobre", href: "/sobre" },
+    { name: "Contato", href: "/contato" },
+  ];
 
   const navigate = useNavigate();
 
   return (
-    <header className="w-full bg-white border-b">
-      <nav className="w-full flex items-center justify-between px-6 py-3">
-        <Link to="/home" className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-orange-500">
-            <span className="text-white font-bold">A</span>
+    <header className="sticky top-0 z-50 w-full border-b border-orange-100 bg-white/80backdrop-blur-xltransition-all duration-300">
+      <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
+        <Link href="/home" className="flex items-center gap-3 no-underline">
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-orange-500 shadow-lg shadow-orange-500/30 transition-all duration-300 hover:scale-105 hover:rotate-3">
+            <span className="text-lg font-bold rounded-full text-white ">A</span>
           </div>
-          <span className="text-lg font-bold">
+          <span className="text-xl font-bold tracking-tight text-gray-800">
             All<span className="text-orange-500">Shop</span>
           </span>
         </Link>
-        <div className="flex-1 flex justify-center">
-          <div className="flex items-center border rounded-lg px-3 py-1 w-[350px] bg-gray-100">
-            <IoSearchOutline size={18} className="text-gray-500" />
-            <input
-              type="text"
-              placeholder="Buscar produtos..."
-              className="bg-transparent outline-none px-2 w-full"
-            />
-          </div>
+        <div className="hidden items-center gap-8 lg:flex">
+          {links.map((link) => (
+            <Link
+              key={link.name}
+              href={link.href}
+              className="relative text-sm font-medium text-gray-700 no-underline transition-colors duration-300 hover:text-orange-500 after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0  after:bg-orange-500 after:transition-all after:duration-300  hover:after:w-full"
+            >
+              {link.name}
+            </Link>
+          ))}
         </div>
         <div className="flex items-center gap-3">
-          <button
-          onClick={() => navigate("/login")}
-            className="bg-orange-500 text-white px-5 py-2.5 rounded-xl font-semibold 
-            hover:bg-orange-600 transition-all duration-200 
-            hover:scale-105 active:scale-95 
-            shadow-md hover:shadow-lg cursor-pointer"
+          <Button
+            onClick={() => navigate("/login")}
+            className="hidden md:flex rounded-2xl bg-orange-500 px-6 py-3 font-semibold text-white shadow-lg shadow-orange-500/30 transition-all duration-300 hover:-translate-y-0.5  hover:bg-orange-600 hover:shadow-xl hover:shadow-orange-500/40 active:scale-95 cursor-pointer"
           >
-            Entrar na sua conta
-          </button>
-          <button className="p-2 border rounded-lg cursor-pointer group hover:bg-gray-100">
+            Entrar
+          </Button>
+          <Button className="group rounded-2xl border border-gray-20  bg-white p-3 transition-all duration-300 hover:border-orange-200  hover:bg-orange-50  hover:shadow-md cursor-pointer">
             <CiShoppingCart
-              size={22}
-              className="text-gray-700 group-hover:text-orange-500 transition"
+              size={28}
+              className="text-gray-700 transition-all duration-300 group-hover:scale-110 group-hover:text-orange-500"
             />
-          </button>
-          <button className="p-2 border rounded-lg hover:bg-gray-100 cursor-pointer group ">
+          </Button>
+          <Button className=" group rounded-2xl border border-gray-200 bg-white p-3 transition-all duration-300 hover:border-orange-200 hover:bg-orange-50 hover:shadow-md cursor-pointer">
             <IoMenuOutline
-              className="text-gray-700 group-hover:text-orange-500 transition"
-              size={22}
+              size={28}
+              className=" text-gray-700 transition-all duration-300 group-hover:scale-110 group-hover:text-orange-500"
             />
-          </button>
+          </Button>
+           <Button
+              isIconOnly
+              onClick={() => navigate("/login")}
+              className="group rounded-2xl border border-gray-200 bg-white p-3 transition-all duration-300 hover:border-orange-200 hover:bg-orange-50 hover:shadow-md cursor-pointer"
+            >
+              <LuDoorClosed
+                size={28}
+                className="text-gray-700 transition-all duration-300 group-hover:scale-110 group-hover:text-orange-500"
+              />
+              <LuDoorOpen
+                size={28}
+                className="absolute opacity-0 scale-75 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
+              />
+            </Button>
         </div>
       </nav>
     </header>
