@@ -34,35 +34,24 @@ export default function PerfilUsuario() {
             </div>
           </div>
 
-          {/* Botões usando HeroUI e React Icons */}
-          <Button 
-            className="bg-black text-white font-medium rounded-xl"
-            startContent={<IoCreateOutline className="text-lg" />}
-          >
+          {/* Botões ajustados para aceitar classes puras do Tailwind */}
+          <Button className="bg-black text-white font-medium rounded-xl flex items-center justify-center gap-2 py-2.5">
+            <IoCreateOutline className="text-lg" />
             Editar Perfil
           </Button>
 
-          <Button 
-            variant="bordered" 
-            className="border-gray-300 font-medium rounded-xl text-gray-700"
-            startContent={<IoBagHandleOutline className="text-lg" />}
-          >
+          <Button className="border border-gray-300 font-medium rounded-xl text-gray-700 bg-white flex items-center justify-center gap-2 py-2.5">
+            <IoBagHandleOutline className="text-lg" />
             Meus Pedidos
           </Button>
 
-          <Button 
-            variant="bordered" 
-            className="border-gray-300 font-medium rounded-xl text-gray-700"
-            startContent={<IoLocationOutline className="text-lg text-gray-500" />}
-          >
+          <Button className="border border-gray-300 font-medium rounded-xl text-gray-700 bg-white flex items-center justify-center gap-2 py-2.5">
+            <IoLocationOutline className="text-lg text-gray-500" />
             Endereços
           </Button>
 
-          <Button 
-            color="danger" 
-            className="font-medium rounded-xl"
-            startContent={<IoLogOutOutline className="text-lg" />}
-          >
+          <Button className="bg-red-500 text-white font-medium rounded-xl flex items-center justify-center gap-2 py-2.5">
+            <IoLogOutOutline className="text-lg" />
             Sair
           </Button>
 
