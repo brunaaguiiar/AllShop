@@ -1,9 +1,11 @@
+import { Button } from "@heroui/react";
+import { IoPersonOutline, IoMailOutline, IoLogOutOutline, IoBagHandleOutline, IoLocationOutline, IoCreateOutline } from "react-icons/io5";
+
 export default function PerfilUsuario() {
   return (
-    <div className="min-h-screen bg-gray-100 flex justify-center items-center">
-
+    <div className="min-h-screen bg-gray-100 flex justify-center items-center p-4">
       <div className="bg-white p-6 rounded-2xl shadow-lg w-[350px]">
-
+        
         <h1 className="text-3xl font-bold text-center mb-2">
           Meu Perfil
         </h1>
@@ -13,41 +15,59 @@ export default function PerfilUsuario() {
         </p>
 
         <div className="flex flex-col gap-4">
-
-          <div className="border rounded-xl p-3">
-            <p className="text-gray-400 text-sm">Nome</p>
-            <h2 className="font-semibold">
-              Ana Luíza
-            </h2>
+          
+          {/* Campo Nome */}
+          <div className="border rounded-xl p-3 flex items-center gap-3">
+            <IoPersonOutline className="text-gray-400 text-xl" />
+            <div>
+              <p className="text-gray-400 text-sm">Nome</p>
+              <h2 className="font-semibold text-gray-800">Ana Luíza</h2>
+            </div>
           </div>
 
-          <div className="border rounded-xl p-3">
-            <p className="text-gray-400 text-sm">E-mail</p>
-            <h2 className="font-semibold">
-              analuiza@email.com
-            </h2>
+          {/* Campo E-mail */}
+          <div className="border rounded-xl p-3 flex items-center gap-3">
+            <IoMailOutline className="text-gray-400 text-xl" />
+            <div>
+              <p className="text-gray-400 text-sm">E-mail</p>
+              <h2 className="font-semibold text-gray-800">analuiza@email.com</h2>
+            </div>
           </div>
 
-          <button className="bg-black text-white py-2 rounded-xl">
+          {/* Botões usando HeroUI e React Icons */}
+          <Button 
+            className="bg-black text-white font-medium rounded-xl"
+            startContent={<IoCreateOutline className="text-lg" />}
+          >
             Editar Perfil
-          </button>
+          </Button>
 
-          <button className="border py-2 rounded-xl">
+          <Button 
+            variant="bordered" 
+            className="border-gray-300 font-medium rounded-xl text-gray-700"
+            startContent={<IoBagHandleOutline className="text-lg" />}
+          >
             Meus Pedidos
-          </button>
+          </Button>
 
-          <button className="border py-2 rounded-xl">
+          <Button 
+            variant="bordered" 
+            className="border-gray-300 font-medium rounded-xl text-gray-700"
+            startContent={<IoLocationOutline className="text-lg text-gray-500" />}
+          >
             Endereços
-          </button>
+          </Button>
 
-          <button className="bg-red-500 text-white py-2 rounded-xl">
+          <Button 
+            color="danger" 
+            className="font-medium rounded-xl"
+            startContent={<IoLogOutOutline className="text-lg" />}
+          >
             Sair
-          </button>
+          </Button>
 
         </div>
-
       </div>
-
     </div>
   );
-} 
+}
