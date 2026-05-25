@@ -1,86 +1,186 @@
-import { Accordion, AccordionItem } from "@heroui/react";
-import { IoChevronDown } from "react-icons/io5";
+import React from "react";
 
-export default function Ajuda() {
-  const perguntas = [
+import { Button } from "@heroui/react";
+
+import {
+  IoHome,
+  IoSearch,
+  IoCart,
+  IoPerson,
+} from "react-icons/io5";
+
+export default function Home() {
+
+  const produtos = [
     {
-      titulo: "Qual o prazo de entrega?",
-      resposta:
-        "O prazo de entrega varia de acordo com a sua localização e o método de envio escolhido. Em geral, entregamos em todo o Brasil em até 7 dias úteis.",
+      id: 1,
+      nome: "Headphone Gamer",
+      preco: "R$ 299,90",
+      imagem:
+        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1200&auto=format&fit=crop",
     },
+
     {
-      titulo: "Posso trocar ou devolver um produto?",
-      resposta:
-        "Sim, você tem até 15 dias para solicitar troca ou devolução sem custo.",
+      id: 2,
+      nome: "Teclado RGB",
+      preco: "R$ 199,90",
+      imagem:
+        "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?q=80&w=1200&auto=format&fit=crop",
     },
+
     {
-      titulo: "Quais formas de pagamento são aceitas?",
-      resposta:
-        "Aceitamos Pix com 5% de desconto, cartôes de crédito (em até 12x sem juros) e boleto bancário",
-    },
-    {
-      titulo: "Como posso acompanhar meu pedido?",
-      resposta:
-        "Acesse 'Meus pedidos' no menu superior. Lá você poderá visualizar o status do seu pedido e o código de rastreamento para acompanhar a entrega.",
-    },
-    {
-      titulo: "Os produtos têm garantia?",
-      resposta:
-        "Todos os produtos vendidos pela AllShop possuem garantia de 90 dias contra defeitos de fabricação. Para acionar a garantia, entre em contato com nosso suporte pelo email ajuda@allshop.com.",
-    },
-    {
-      titulo: "Como falar com o suporte?",
-      resposta:
-        "Você pode entrar em contato com nosso time de suporte pelo email ajuda@allshop.com.",
+      id: 3,
+      nome: "Mouse Gamer",
+      preco: "R$ 149,90",
+      imagem:
+        "https://images.unsplash.com/photo-1527814050087-3793815479db?q=80&w=1200&auto=format&fit=crop",
     },
   ];
 
   return (
-    <section className="flex flex-col items-center px-6">
-      <div className="mb-10 text-center">
-        <h2 className="text-4xl font-bold text-gray-800 mb-2">
-          Como podemos ajudar?
-        </h2>
-        <p className="text-gray-500">
-          Encontre respostas para as dúvidas mais comuns.
-        </p>
-      </div>
-      <div className="w-full max-w-4xl">
-        <Accordion
-          showDivider={false}
-          selectionMode="multiple"
-          className="gap-4 flex flex-col w-full"
-          itemClasses={{
-            base: "border border-orange-200 !rounded-2xl bg-white shadow-sm",
-            trigger: "px-6 py-4 flex items-center justify-between w-full cursor-pointer",
-            title: "font-semibold text-gray-800 text-left", 
-            indicator:
-              "text-orange-500 transition-transform duration-300 data-[open=true]:-rotate-180",
-            content: "px-6 pb-6 text-gray-600",
-          }}
-        >
-          {perguntas.map((item, index) => (
-            <AccordionItem
-              key={index}
-              title={item.titulo}
-              indicator={<IoChevronDown size={22} />}
+    <div className="min-h-screen bg-gray-100">
+
+      {/* HEADER */}
+      <header className="bg-white shadow-sm">
+
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+          {/* LOGO */}
+          <div className="flex items-center gap-3">
+
+            <div className="h-10 w-10 rounded-xl bg-orange-500 flex items-center justify-center">
+
+              <span className="text-white font-bold text-lg">
+                A
+              </span>
+
+            </div>
+
+            <h1 className="text-2xl font-bold text-gray-800">
+              AllShop
+            </h1>
+
+          </div>
+
+          {/* MENU */}
+          <div className="flex items-center gap-6 text-gray-600">
+
+            <IoHome
+              size={24}
+              className="cursor-pointer hover:text-orange-500 transition-all"
+            />
+
+            <IoSearch
+              size={24}
+              className="cursor-pointer hover:text-orange-500 transition-all"
+            />
+
+            <IoCart
+              size={24}
+              className="cursor-pointer hover:text-orange-500 transition-all"
+            />
+
+            <IoPerson
+              size={24}
+              className="cursor-pointer hover:text-orange-500 transition-all"
+            />
+
+          </div>
+        </div>
+      </header>
+
+      {/* HERO */}
+      <section className="max-w-7xl mx-auto px-6 py-10">
+
+        <div className="bg-white rounded-3xl shadow-md p-10 flex flex-col lg:flex-row items-center justify-between gap-10">
+
+          {/* TEXTO */}
+          <div>
+
+            <p className="text-orange-500 font-semibold mb-3">
+              NOVA COLEÇÃO
+            </p>
+
+            <h2 className="text-5xl font-bold text-gray-800 leading-tight max-w-xl">
+
+              Os melhores produtos para você
+
+            </h2>
+
+            <p className="text-gray-500 mt-5 max-w-lg">
+
+              Produtos modernos, bonitos e com ótima qualidade
+              para deixar seu setup mais profissional.
+
+            </p>
+
+            <Button
+              color="warning"
+              className="mt-6 text-white font-semibold"
             >
-              {item.resposta}
-            </AccordionItem>
+              Comprar Agora
+            </Button>
+
+          </div>
+
+          {/* IMAGEM */}
+          <div>
+
+            <img
+              src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?q=80&w=1200&auto=format&fit=crop"
+              alt="Banner"
+              className="w-[400px] rounded-3xl shadow-lg"
+            />
+
+          </div>
+        </div>
+      </section>
+
+      {/* PRODUTOS */}
+      <section className="max-w-7xl mx-auto px-6 pb-16">
+
+        <h2 className="text-3xl font-bold text-gray-800 mb-8">
+          Produtos
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          {produtos.map((produto) => (
+
+            <div
+              key={produto.id}
+              className="bg-white rounded-3xl shadow-md overflow-hidden hover:scale-[1.02] transition-all"
+            >
+
+              <img
+                src={produto.imagem}
+                alt={produto.nome}
+                className="w-full h-60 object-cover"
+              />
+
+              <div className="p-5">
+
+                <h3 className="text-xl font-semibold text-gray-800">
+                  {produto.nome}
+                </h3>
+
+                <p className="text-orange-500 font-bold text-lg mt-2">
+                  {produto.preco}
+                </p>
+
+                <Button
+                  color="warning"
+                  className="w-full mt-5 text-white font-semibold"
+                >
+                  Comprar
+                </Button>
+
+              </div>
+            </div>
+
           ))}
-        </Accordion>
-      </div>
-      <div className="mt-8 w-full max-w-3xl p-8 bg-orange-100 border border-orange-500 rounded-3xl text-center">
-        <p className="font-semibold text-gray-800">
-          Não encontrou o que procurava?
-        </p>
-        <p className="text-sm text-gray-600">
-          Fale com nosso time em{" "}
-          <a href="mailto:ajuda@allshop.com" className="text-orange-500 font-medium">
-            ajuda@allshop.com
-          </a>
-        </p>
-      </div>
-    </section>
+        </div>
+      </section>
+    </div>
   );
 }
