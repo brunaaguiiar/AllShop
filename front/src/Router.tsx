@@ -4,7 +4,7 @@ import NavBar from "./components/navbar/Navbar";
 import Login from "./screens/login/Login";
 import Cadastro from "./screens/cadastro/Cadastro";
 import RecuperarSenha from "./screens/recuperarSenha/RecuperarSenha";
-import Ajuda from "./screens/ajuda/Ajuda";
+import PerfilUsuario from "./screens/PerfilUsuario/PerfilUsuario";
 
 const ProtectedLayout = () => {
   return (
@@ -28,7 +28,8 @@ export default function Router() {
     <Route path="/Ajuda" element={<Ajuda />} />
         <Route path="/" element={<Navigate to="/home" />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/perfil" element={<PerfilUsuario />} />
       </Route>
-    </Routes>
+</Routes>
   );
 }
