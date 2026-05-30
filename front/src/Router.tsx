@@ -25,6 +25,7 @@ export default function Router() {
     <Route path="/recuperar-senha" element={<RecuperarSenha />} />
     <Route path="/Cadastro" element={<Cadastro />} />
       <Route element={<ProtectedLayout />}>
+    <Route path="/Ajuda" element={<Ajuda />} />
         <Route path="/" element={<Navigate to="/home" />} />
         <Route path="/home" element={<Home />} />
         <Route path="/perfil" element={<PerfilUsuario />} />
