@@ -25,36 +25,7 @@ export default function Home() {
         padding: "120px 32px 32px"
       }}
     >
-      <section
-        aria-label="Controles de acessibilidade"
-        style={{
-          display: "flex",
-          gap: "10px",
-          alignItems: "center",
-          flexWrap: "wrap",
-          backgroundColor: contraste ? "#111" : "#fff",
-          padding: "14px",
-          borderRadius: "18px",
-          boxShadow: contraste ? "none" : "0 4px 14px rgba(0,0,0,0.08)",
-          border: contraste ? "1px solid #fff" : "1px solid #eee",
-          marginBottom: "28px"
-        }}
-      >
-        <strong>Acessibilidade</strong>
-
-        <button onClick={() => setFonte(fonte + 2)} aria-label="Aumentar tamanho da fonte">
-          A+
-        </button>
-
-        <button onClick={() => fonte > 12 && setFonte(fonte - 2)} aria-label="Diminuir tamanho da fonte">
-          A-
-        </button>
-
-        <button onClick={() => setContraste(!contraste)} aria-label="Ativar ou desativar alto contraste">
-          Alto contraste
-        </button>
-      </section>
-
+      
       <header style={{ marginBottom: "24px" }}>
         <h1 style={{ fontSize: "2em", marginBottom: "6px" }}>
           Tecnologia em destaque
