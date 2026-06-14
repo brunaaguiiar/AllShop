@@ -12,7 +12,24 @@ import {
 
 export default function PerfilUsuario() {
   const navigate = useNavigate();
-
+  const botaoPadrao = `
+    w-full
+    h-16
+    rounded-xl
+    text-lg
+    font-semibold
+    flex
+    items-center
+    justify-center
+    gap-3
+    transition-all
+    duration-300
+    hover:bg-orange-500
+    hover:text-white
+    hover:scale-[1.02]
+    focus:ring-4
+    focus:ring-orange-300
+  `;
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center p-4">
       <div className="bg-white p-6 rounded-2xl shadow-lg w-[350px]">
@@ -51,41 +68,41 @@ export default function PerfilUsuario() {
 
           <Button
             onPress={() => navigate("/editar-perfil")}
-            className="bg-black text-white font-medium rounded-xl flex items-center justify-center gap-2 py-2.5"
+            className={`${botaoPadrao} bg-black text-white`}
           >
-            <IoCreateOutline className="text-lg" />
+            <IoCreateOutline className="text-2xl" />
             Editar Perfil
           </Button>
 
           <Button
             onPress={() => navigate("/meus-pedidos")}
-            className="border border-gray-300 font-medium rounded-xl text-gray-700 bg-white flex items-center justify-center gap-2 py-2.5"
+            className={`${botaoPadrao} bg-white border border-gray-300 text-gray-700`}
           >
-            <IoBagHandleOutline className="text-lg" />
+            <IoBagHandleOutline className="text-2xl" />
             Meus Pedidos
           </Button>
 
           <Button
             onPress={() => navigate("/enderecos")}
-            className="border border-gray-300 font-medium rounded-xl text-gray-700 bg-white flex items-center justify-center gap-2 py-2.5"
+            className={`${botaoPadrao} bg-white border border-gray-300 text-gray-700`}
           >
-            <IoLocationOutline className="text-lg text-gray-500" />
+            <IoLocationOutline className="text-2xl" />
             Endereços
           </Button>
 
           <Button
             onPress={() => navigate("/minha-carteira")}
-            className="border border-gray-300 font-medium rounded-xl text-gray-700 bg-white flex items-center justify-center gap-2 py-2.5"
+            className={`${botaoPadrao} bg-white border border-gray-300 text-gray-700`}
           >
-            <IoCardOutline className="text-lg text-gray-500" />
+            <IoCardOutline className="text-2xl" />
             Minha carteira / Cartões
           </Button>
 
           <Button
             onPress={() => navigate("/login")}
-            className="bg-red-500 text-white font-medium rounded-xl flex items-center justify-center gap-2 py-2.5"
+            className={`${botaoPadrao} bg-red-500 text-white hover:bg-red-700`}
           >
-            <IoLogOutOutline className="text-lg" />
+            <IoLogOutOutline className="text-2xl" />
             Sair
           </Button>
 
