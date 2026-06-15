@@ -7,9 +7,6 @@
     "esModuleInterop": true,
     "ignoreDeprecations": "6.0",
     
-    "baseUrl": ".",
-    "paths": {
-      "@prisma/client": ["./src/generated/prisma/client/prisma"]
-    }
+    "baseUrl": "."
   }
 }

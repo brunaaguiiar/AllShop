@@ -6,6 +6,7 @@ import Cadastro from "./screens/cadastro/Cadastro";
 import RecuperarSenha from "./screens/recuperarSenha/RecuperarSenha";
 import PerfilUsuario from "./screens/PerfilUsuario/PerfilUsuario";
 import Ajuda from "./screens/ajuda/Ajuda";
+import Sobre from "./screens/sobre/Sobre";
 
 const ProtectedLayout = () => {
   return (
@@ -29,6 +30,7 @@ export default function Router() {
         <Route path="/" element={<Navigate to="/home" />} />
         <Route path="/home" element={<Home />} />
         <Route path="/perfil" element={<PerfilUsuario />} />
+        <Route path="/sobre" element={<Sobre />} />
       </Route>
     </Routes>
   );
