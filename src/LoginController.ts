@@ -1,25 +1,60 @@
-async function loginUsuario(req, res) {
-  try {
-    const { email, senha } = req.body;
+import React, { useState } from "react";
 
-    const usuario = await prisma.usuario.findUnique({ where: { email } });
-    if (!usuario) {
-      return res.status(401).json({ erro: "E-mail ou senha incorretos." });
-    }
+const Login: React.FC = () => {
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
 
-    const senhaEstaCorreta = await bcrypt.compare(senha, usuario.senha);
-    if (!senhaEstaCorreta) {
-      return res.status(401).json({ erro: "E-mail ou senha incorretos." });
-    }
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
 
-    const token = jwt.sign({ id: usuario.id }, "SUA_CHAVE_SECRETA", { expiresIn: "1d" });
-
-    return res.status(200).json({
-      usuario: { nome: usuario.nome, email: usuario.email },
-      token: token
+    console.log({
+      email,
+      senha,
     });
 
-  } catch (error) {
-    return res.status(500).json({ erro: "Erro interno no servidor." });
-  }
-}
+    alert("Login realizado com sucesso!");
+  };
+
+  return (
+    <div className="auth-container">
+      <div className="card">
+        <div className="logo">A</div>
+
+        <h1>Entrar na AllShop</h1>
+        <p>Acesse sua conta para continuar.</p>
+
+        <form onSubmit={handleLogin}>
+          <label>Email</label>
+          <input
+            type="email"
+            placeholder="sua@email.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+
+          <label>Senha</label>
+          <input
+            type="password"
+            placeholder="Sua senha"
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
+            required
+          />
+
+          <a href="#">Recuperar senha</a>
+
+          <button type="submit">
+            Entrar na conta
+          </button>
+        </form>
+
+        <p>
+          Ainda não tem conta? <a href="/cadastro">Criar uma conta gratuita</a>
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default Login;
