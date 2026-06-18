@@ -3,6 +3,8 @@
     "target": "ESNext",
     "module": "ESNext",
     "jsx": "react-jsx",
+    "noEmit": true,
+    "skipLibCheck": true,
     "types": ["vite/client"], 
     "paths": {
       "@/*": ["./src/*"]

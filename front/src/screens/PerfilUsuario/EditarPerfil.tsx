@@ -1,12 +1,20 @@
 import { useState } from "react";
 import { Button } from "@heroui/react";
+import { useNavigate } from "react-router-dom";
 
 export default function EditarPerfil() {
-  const [nome, setNome] = useState("Ana Luíza");
-  const [email, setEmail] = useState("analuiza@email.com");
+  const navigate = useNavigate();
+  const usuarioSalvo = JSON.parse(
+    localStorage.getItem("allshop:usuario") ??
+      '{"nome":"Ana Luíza","email":"analuiza@email.com"}'
+  );
+  const [nome, setNome] = useState(usuarioSalvo.nome);
+  const [email, setEmail] = useState(usuarioSalvo.email);
 
   const salvar = () => {
+    localStorage.setItem("allshop:usuario", JSON.stringify({ nome, email }));
     alert("Dados salvos com sucesso!");
+    navigate("/perfil");
   };
 
   return (

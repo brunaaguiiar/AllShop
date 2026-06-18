@@ -12,6 +12,17 @@ import {
 
 export default function PerfilUsuario() {
   const navigate = useNavigate();
+  const usuarioSalvo = JSON.parse(
+    localStorage.getItem("allshop:usuario") ??
+      '{"nome":"Ana Luíza","email":"analuiza@email.com"}'
+  );
+
+  const sair = () => {
+    localStorage.removeItem("allshop:token");
+    sessionStorage.clear();
+    navigate("/login");
+  };
+
   const botaoPadrao = `
     w-full
     h-16
@@ -50,7 +61,7 @@ export default function PerfilUsuario() {
             <div>
               <p className="text-gray-400 text-sm">Nome</p>
               <h2 className="font-semibold text-gray-800">
-                Ana Luíza
+                {usuarioSalvo.nome}
               </h2>
             </div>
           </div>
@@ -61,7 +72,7 @@ export default function PerfilUsuario() {
             <div>
               <p className="text-gray-400 text-sm">E-mail</p>
               <h2 className="font-semibold text-gray-800">
-                analuiza@email.com
+                {usuarioSalvo.email}
               </h2>
             </div>
           </div>
@@ -99,7 +110,7 @@ export default function PerfilUsuario() {
           </Button>
 
           <Button
-            onPress={() => navigate("/login")}
+            onPress={sair}
             className={`${botaoPadrao} bg-red-500 text-white hover:bg-red-700`}
           >
             <IoLogOutOutline className="text-2xl" />
