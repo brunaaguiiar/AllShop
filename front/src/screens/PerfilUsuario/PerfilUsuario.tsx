@@ -1,24 +1,38 @@
 import { Button } from "@heroui/react";
 import { useNavigate } from "react-router-dom";
 import {
-  IoPersonOutline,
-  IoMailOutline,
-  IoLogOutOutline,
   IoBagHandleOutline,
-  IoLocationOutline,
-  IoCreateOutline,
   IoCardOutline,
+  IoCreateOutline,
+  IoLocationOutline,
+  IoLogOutOutline,
+  IoMailOutline,
+  IoPersonOutline,
+  IoCallOutline,
 } from "react-icons/io5";
+
+const usuarioPadrao = {
+  nome: "Ana Luiza",
+  email: "analuiza@email.com",
+  telefone: "(11) 99999-9999",
+};
+
+function buscarUsuarioSalvo() {
+  try {
+    const usuario = localStorage.getItem("allshop:usuario");
+    return usuario ? JSON.parse(usuario) : usuarioPadrao;
+  } catch {
+    return usuarioPadrao;
+  }
+}
 
 export default function PerfilUsuario() {
   const navigate = useNavigate();
-  const usuarioSalvo = JSON.parse(
-    localStorage.getItem("allshop:usuario") ??
-      '{"nome":"Ana Luíza","email":"analuiza@email.com"}'
-  );
+  const usuarioSalvo = buscarUsuarioSalvo();
 
   const sair = () => {
     localStorage.removeItem("allshop:token");
+    localStorage.removeItem("allshop:usuario");
     sessionStorage.clear();
     navigate("/login");
   };
@@ -41,21 +55,15 @@ export default function PerfilUsuario() {
     focus:ring-4
     focus:ring-orange-300
   `;
+
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center p-4">
       <div className="bg-white p-6 rounded-2xl shadow-lg w-[350px]">
+        <h1 className="text-3xl font-bold text-center mb-2">Meu Perfil</h1>
 
-        <h1 className="text-3xl font-bold text-center mb-2">
-          Meu Perfil
-        </h1>
-
-        <p className="text-gray-500 text-center mb-8">
-          Informações da conta
-        </p>
+        <p className="text-gray-500 text-center mb-8">Informacoes da conta</p>
 
         <div className="flex flex-col gap-4">
-
-          {/* Campo Nome */}
           <div className="border rounded-xl p-3 flex items-center gap-3">
             <IoPersonOutline className="text-gray-400 text-xl" />
             <div>
@@ -66,13 +74,22 @@ export default function PerfilUsuario() {
             </div>
           </div>
 
-          {/* Campo E-mail */}
           <div className="border rounded-xl p-3 flex items-center gap-3">
             <IoMailOutline className="text-gray-400 text-xl" />
             <div>
               <p className="text-gray-400 text-sm">E-mail</p>
               <h2 className="font-semibold text-gray-800">
                 {usuarioSalvo.email}
+              </h2>
+            </div>
+          </div>
+
+          <div className="border rounded-xl p-3 flex items-center gap-3">
+            <IoCallOutline className="text-gray-400 text-xl" />
+            <div>
+              <p className="text-gray-400 text-sm">Telefone</p>
+              <h2 className="font-semibold text-gray-800">
+                {usuarioSalvo.telefone ?? usuarioPadrao.telefone}
               </h2>
             </div>
           </div>
@@ -98,7 +115,7 @@ export default function PerfilUsuario() {
             className={`${botaoPadrao} bg-white border border-gray-300 text-gray-700`}
           >
             <IoLocationOutline className="text-2xl" />
-            Endereços
+            Enderecos
           </Button>
 
           <Button
@@ -106,7 +123,7 @@ export default function PerfilUsuario() {
             className={`${botaoPadrao} bg-white border border-gray-300 text-gray-700`}
           >
             <IoCardOutline className="text-2xl" />
-            Minha carteira / Cartões
+            Minha carteira / Cartoes
           </Button>
 
           <Button
@@ -116,7 +133,6 @@ export default function PerfilUsuario() {
             <IoLogOutOutline className="text-2xl" />
             Sair
           </Button>
-
         </div>
       </div>
     </div>
