@@ -62,7 +62,7 @@ model configuracao_usuario {
 model endereco {
   endereco_id Int      @id @default(autoincrement())
   usuario_id  Int
-  cep         String   @db.VarChar(10)
+  cep         String   @db.Char(9)
   logradouro  String   @db.VarChar(150)
   numero      String?  @db.VarChar(10)
   complemento String?  @db.VarChar(100)
