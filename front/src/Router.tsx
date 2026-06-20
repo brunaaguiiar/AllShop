@@ -7,6 +7,7 @@ import RecuperarSenha from "./screens/recuperarSenha/RecuperarSenha";
 import PerfilUsuario from "./screens/PerfilUsuario/PerfilUsuario";
 import Ajuda from "./screens/ajuda/Ajuda";
 import Carrinho from "./screens/carrinho/Carrinho";
+import Fornecedores from "./screens/fornecedores/Fornecedores";
 
 const ProtectedLayout = () => {
   return (
@@ -31,6 +32,7 @@ export default function Router() {
         <Route path="/home" element={<Home />} />
         <Route path="/perfil" element={<PerfilUsuario />} />
         <Route path="/carrinho" element={<Carrinho />} />
+        <Route path="/fornecedores" element={<Fornecedores />} />
 
       </Route>
     </Routes>
