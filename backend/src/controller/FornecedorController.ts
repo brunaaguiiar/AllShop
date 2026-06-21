@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
-import { FornecedorService } from '../services/fornecedor.service';
+import { Request, Response } from 'express'
+import { FornecedorService } from '../services/fornecedor.service'
 
 const fornecedorService = new FornecedorService();
 

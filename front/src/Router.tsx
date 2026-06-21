@@ -9,6 +9,8 @@ import Ajuda from "./screens/ajuda/Ajuda";
 import Sobre from "./screens/sobre/Sobre";
 import EditarPerfil from "./screens/PerfilUsuario/EditarPerfil";
 import PaginaPerfilAcao from "./screens/PerfilUsuario/PaginaPerfilAcao";
+import ProdutoDetalhe from "./screens/produto/ProdutoDetalhe";
+import MeusPedidos from "./screens/MeusPedidos/meusPedidos";
 
 const ProtectedLayout = () => {
   return (
@@ -23,29 +25,37 @@ const ProtectedLayout = () => {
 
 export default function Router() {
   return (
-
     <Routes>
+      {/* 🔓 Rotas Públicas (Acessíveis sem login) */}
       <Route path="/login" element={<Login />} />
-      <Route path="/recuperar-senha" element={<RecuperarSenha />} />
-      <Route path="/Cadastro" element={<Cadastro />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/recuperar-senha" element={<RecuperarSenha />} />
       <Route path="/cadastro" element={<Cadastro />} />
-      <Route path="/Cadastro" element={<Cadastro />} />
+      
+      {/* 💡 Padronizado para /recuperar-senha (com hífen) */}
+      <Route path="/recuperar-senha" element={<RecuperarSenha />} />
+      
+      {/* 🔀 Redirecionamento extra: se digitar colado (/recuperarsenha), joga para o certo */}
+      <Route path="/recuperarsenha" element={<Navigate to="/recuperar-senha" replace />} />
+      <Route path="/recuperar" element={<Navigate to="/recuperar-senha" replace />} />
+
+      {/* 🔒 Rotas Protegidas (Dentro do Layout com a NavBar) */}
       <Route element={<ProtectedLayout />}>
-        <Route path="/Ajuda" element={<Ajuda />} />
-        <Route path="/Ajuda" element={<Ajuda />} />
         <Route path="/" element={<Navigate to="/home" />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/ajuda" element={<Ajuda />} />
         <Route path="/perfil" element={<PerfilUsuario />} />
         <Route path="/sobre" element={<Sobre />} />
         <Route path="/editar-perfil" element={<EditarPerfil />} />
-        <Route path="/meus-pedidos" element={<PaginaPerfilAcao tipo="pedidos" />} />
-        <Route path="/pedidos" element={<PaginaPerfilAcao tipo="pedidos" />} />
+        <Route path="/meusPedidos" element={<MeusPedidos />} />
+        {/* Unificando as rotas de pedidos para carregar o mesmo componente */}
+        <Route path="/meus-pedidos" element={<MeusPedidos />} /> 
+        <Route path="/pedidos" element={<MeusPedidos />} />
         <Route path="/enderecos" element={<PaginaPerfilAcao tipo="enderecos" />} />
         <Route path="/minha-carteira" element={<PaginaPerfilAcao tipo="carteira" />} />
+        <Route path="/produto/:id" element={<ProdutoDetalhe />} />
       </Route>
+
+      {/* 🌐 Rota de fuga: se o usuário digitar qualquer coisa inexistente, manda para a Home */}
+      <Route path="*" element={<Navigate to="/home" replace />} />
     </Routes>
   );
 }
-

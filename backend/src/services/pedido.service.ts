@@ -1,105 +1,73 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
-
-interface IItemPedidoInput {
-  produto_id: number
-  quantidade: number
-  preco_unitario: number
-}
-
-interface ICriarPedidoInput {
-  usuario_id: number
-  endereco_id: number
-  forma_pagamento: string
-  itens: IItemPedidoInput[]
-}
+import { prisma } from "../lib/prisma";
 
 export class PedidoService {
-  
-  async criarPedido(dados: ICriarPedidoInput) {
-    let valorTotal = 0
+  async criarPedido(data: {
+    usuario_id: number;
+    endereco_id: number;
+    forma_pagamento: string;
+    itens: Array<{ produto_id: number; quantidade: number }>;
+  }) {
+    const produtos = await Promise.all(
+      data.itens.map(async (item) => {
+        const produto = await prisma.produto.findUnique({
+          where: { produto_id: item.produto_id },
+        });
 
-    const itensMapeados = dados.itens.map(item => {
-      const subtotal = item.quantidade * item.preco_unitario;
-      valorTotal += subtotal
-
-      return {
-        produto_id: item.produto_id,
-        quantidade: item.quantidade,
-        preco_unitario: item.preco_unitario,
-        subtotal: subtotal
-      }
-    })
-
-    const novoPedido = await prisma.pedido.create({
-      data: {
-        usuario_id: dados.usuario_id,
-        endereco_id: dados.endereco_id,
-        forma_pagamento: dados.forma_pagamento,
-        valor_total: valorTotal,
-        status: "PENDENTE",
-        item_pedido: {
-          create: itensMapeados
+        if (!produto) {
+          throw new Error(`Produto ${item.produto_id} não encontrado.`);
         }
+
+        return { produto, quantidade: item.quantidade };
+      })
+    )
+
+    const valorTotal = produtos.reduce(
+      (sum, { produto, quantidade }) => sum + Number(produto.preco) * quantidade,
+      0
+    )
+
+    const pedido = await prisma.pedido.create({
+      data: {
+        usuario_id: data.usuario_id,
+        endereco_id: data.endereco_id,
+        forma_pagamento: data.forma_pagamento,
+        valor_total: valorTotal,
+        status: "pendente",
+        item_pedido: {
+          create: produtos.map(({ produto, quantidade }) => ({
+            produto_id: produto.produto_id,
+            quantidade,
+            preco_unitario: Number(produto.preco),
+            subtotal: Number(produto.preco) * quantidade,
+          })),
+        },
       },
       include: {
-        item_pedido: {
-          include: {
-            produto: true
-          }
-        },
-        endereco: true
-      }
+        item_pedido: { include: { produto: true } },
+      },
     })
 
-    for (const item of dados.itens) {
-      await prisma.produto.update({
-        where: { produto_id: item.produto_id },
-        data: {
-          estoque: {
-            decrement: item.quantidade
-          }
-        }
-      })
-    }
-
-    return novoPedido;
+    return pedido;
   }
 
   async listarHistoricoUsuario(usuarioId: number) {
     return await prisma.pedido.findMany({
       where: { usuario_id: usuarioId },
       include: {
-        item_pedido: {
-          include: {
-            produto: true
-          }
-        }
+        item_pedido: { include: { produto: true } },
+        endereco: true,
       },
-      orderBy: {
-        data_pedido: 'desc'
-      }
-    })
+      orderBy: { data_pedido: "desc" },
+    });
   }
 
   async obterDetalhesPedido(pedidoId: number) {
-    const pedido = await prisma.pedido.findUnique({
+    return await prisma.pedido.findUnique({
       where: { id: pedidoId },
       include: {
-        item_pedido: {
-          include: {
-            produto: true
-          }
-        },
-        endereco: true
-      }
+        item_pedido: { include: { produto: true } },
+        endereco: true,
+      },
     })
-
-    if (!pedido) {
-      throw new Error('Pedido não encontrado.');
-    }
-
-    return pedido;
   }
 }

@@ -8,16 +8,8 @@ const cadastroController = new CadastroController()
 const loginController = new LoginController()
 const recuperarSenhaController = new RecuperarSenhaController() 
 
-usuarioRoutes.post("/cadastro", (req, res) => {
-  cadastroController.handle(req, res)
-})
-
-usuarioRoutes.post("/login", (req, res) => {
-  loginController.handle(req, res)
-})
-
-usuarioRoutes.post("/usuarios/recuperar-senha", (req, res) => {
-  recuperarSenhaController.recuperar(req, res)
-})
+usuarioRoutes.post("/cadastro", cadastroController.handle)
+usuarioRoutes.post("/login", loginController.handle)
+usuarioRoutes.post("/usuarios/recuperar-senha", recuperarSenhaController.recuperar)
 
 export { usuarioRoutes }
