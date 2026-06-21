@@ -1,1 +1,70 @@
 @import "tailwindcss";
+
+.modo-contraste {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+.modo-contraste main,
+.modo-contraste div,
+.modo-contraste section,
+.modo-contraste form,
+.modo-contraste nav,
+.modo-contraste header {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+.modo-contraste h1,
+.modo-contraste h2,
+.modo-contraste h3,
+.modo-contraste h4,
+.modo-contraste h5,
+.modo-contraste h6,
+.modo-contraste p,
+.modo-contraste span,
+.modo-contraste a,
+.modo-contraste label {
+  color: #ffffff !important;
+}
+
+.modo-contraste button,
+.modo-contraste a[role="button"] {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  font-weight: 900 !important;
+  border: 2px solid #000000 !important;
+}
+
+.modo-contraste button:hover {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 2px solid #ffffff !important;
+}
+
+.modo-contraste strong {
+  color: #ffff00 !important;
+}
+
+.modo-contraste article {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 3px solid #ffffff !important; 
+  box-shadow: none !important;
+}
+
+.modo-contraste input,
+.modo-contraste select,
+.modo-contraste textarea {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 2px solid #ffffff !important;
+}
+
+.modo-contraste svg,
+.modo-contraste img {
+  filter: brightness(0) invert(1) !important;
+}
+/* Botão do VLibras */

@@ -1,6 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
-  output   = "../src/generated/client"
+  provider   = "prisma-client-js"
+  engineType = "library"
 }
 
 datasource db {
@@ -62,7 +62,7 @@ model configuracao_usuario {
 model endereco {
   endereco_id Int      @id @default(autoincrement())
   usuario_id  Int
-  cep         String   @db.Char(9)
+  cep         String   @db.VarChar(10)
   logradouro  String   @db.VarChar(150)
   numero      String?  @db.VarChar(10)
   complemento String?  @db.VarChar(100)
@@ -182,6 +182,7 @@ model usuario {
   telefone             String?               @db.VarChar(20)
   data_nascimento      DateTime?             @db.Date
   data_cadastro        DateTime?             @default(now()) @db.DateTime(0)
+  role                 String                @default("USER") @db.VarChar(20)
   avaliacao            avaliacao[]
   carrinho             carrinho[]
   comentario           comentario[]
