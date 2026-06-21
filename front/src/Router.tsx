@@ -4,6 +4,7 @@ import NavBar from "./components/navbar/Navbar";
 import Login from "./screens/login/Login";
 import Cadastro from "./screens/cadastro/Cadastro";
 import RecuperarSenha from "./screens/recuperarSenha/RecuperarSenha";
+import PerfilUsuario from "./screens/PerfilUsuario/PerfilUsuario";
 import Ajuda from "./screens/ajuda/Ajuda";
 import ProdutoDetalhe from "./screens/produto/ProdutoDetalhe";
 
@@ -30,6 +31,7 @@ export default function Router() {
         <Route path="/" element={<Navigate to="/home" />} />
         <Route path="/home" element={<Home />} />
         <Route path="/produto/:id" element={<ProdutoDetalhe />} />
+        <Route path="/perfil" element={<PerfilUsuario />} />
       </Route>
     </Routes>
   );

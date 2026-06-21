@@ -1,0 +1,192 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/client"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model avaliacao {
+  usuario_id     Int
+  produto_id     Int
+  data_avaliacao DateTime? @default(now()) @db.DateTime(0)
+  nota           Int
+  usuario        usuario   @relation(fields: [usuario_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "avaliacao_ibfk_1")
+  produto        produto   @relation(fields: [produto_id], references: [produto_id], onDelete: NoAction, onUpdate: NoAction, map: "avaliacao_ibfk_2")
+
+  @@id([usuario_id, produto_id])
+  @@index([produto_id], map: "produto_id")
+}
+
+model carrinho {
+  id_carrinho   Int             @id @default(autoincrement())
+  id_usuario    Int
+  data_criacao  DateTime?       @default(now()) @db.DateTime(0)
+  status        String?         @db.VarChar(30)
+  usuario       usuario         @relation(fields: [id_usuario], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "carrinho_ibfk_1")
+  item_carrinho item_carrinho[]
+
+  @@index([id_usuario], map: "id_usuario")
+}
+
+model categoria {
+  id        Int       @id @default(autoincrement())
+  nome      String    @db.VarChar(100)
+  descricao String?   @db.Text
+  produto   produto[]
+}
+
+model comentario {
+  id              Int       @id @default(autoincrement())
+  usuario_id      Int
+  produto_id      Int
+  data_comentario DateTime? @default(now()) @db.DateTime(0)
+  texto           String    @db.Text
+  usuario         usuario   @relation(fields: [usuario_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comentario_ibfk_1")
+  produto         produto   @relation(fields: [produto_id], references: [produto_id], onDelete: NoAction, onUpdate: NoAction, map: "comentario_ibfk_2")
+
+  @@index([produto_id], map: "produto_id")
+  @@index([usuario_id], map: "usuario_id")
+}
+
+model configuracao_usuario {
+  usuario_id     Int      @id
+  tamanho_fonte  String?  @db.VarChar(20)
+  alto_contraste Boolean? @default(false)
+  audio          Boolean? @default(false)
+  libras         Boolean? @default(false)
+  usuario        usuario  @relation(fields: [usuario_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "configuracao_usuario_ibfk_1")
+}
+
+model endereco {
+  endereco_id Int      @id @default(autoincrement())
+  usuario_id  Int
+  cep         String   @db.Char(9)
+  logradouro  String   @db.VarChar(150)
+  numero      String?  @db.VarChar(10)
+  complemento String?  @db.VarChar(100)
+  bairro      String?  @db.VarChar(100)
+  cidade      String?  @db.VarChar(100)
+  estado      String?  @db.Char(2)
+  usuario     usuario  @relation(fields: [usuario_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "endereco_ibfk_1")
+  pedido      pedido[]
+
+  @@index([usuario_id], map: "usuario_id")
+}
+
+model favorito {
+  usuario_id    Int
+  produto_id    Int
+  data_favorito DateTime? @default(now()) @db.DateTime(0)
+  usuario       usuario   @relation(fields: [usuario_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "favorito_ibfk_1")
+  produto       produto   @relation(fields: [produto_id], references: [produto_id], onDelete: NoAction, onUpdate: NoAction, map: "favorito_ibfk_2")
+
+  @@id([usuario_id, produto_id])
+  @@index([produto_id], map: "produto_id")
+}
+
+model fornecedor {
+  fornecedor_id Int       @id @default(autoincrement())
+  razao_social  String    @db.VarChar(150)
+  cnpj          String    @unique(map: "cnpj") @db.VarChar(18)
+  email         String?   @db.VarChar(150)
+  telefone      String?   @db.VarChar(20)
+  data_cadastro DateTime? @default(now()) @db.DateTime(0)
+  produto       produto[]
+}
+
+model item_carrinho {
+  id_carrinho Int
+  id_produto  Int
+  quantidade  Int
+  carrinho    carrinho @relation(fields: [id_carrinho], references: [id_carrinho], onDelete: NoAction, onUpdate: NoAction, map: "item_carrinho_ibfk_1")
+  produto     produto  @relation(fields: [id_produto], references: [produto_id], onDelete: NoAction, onUpdate: NoAction, map: "item_carrinho_ibfk_2")
+
+  @@id([id_carrinho, id_produto])
+  @@index([id_produto], map: "id_produto")
+}
+
+model item_pedido {
+  pedido_id      Int
+  produto_id     Int
+  quantidade     Int
+  preco_unitario Decimal? @db.Decimal(10, 2)
+  subtotal       Decimal? @db.Decimal(10, 2)
+  pedido         pedido   @relation(fields: [pedido_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "item_pedido_ibfk_1")
+  produto        produto  @relation(fields: [produto_id], references: [produto_id], onDelete: NoAction, onUpdate: NoAction, map: "item_pedido_ibfk_2")
+
+  @@id([pedido_id, produto_id])
+  @@index([produto_id], map: "produto_id")
+}
+
+model oferta {
+  id          Int       @id @default(autoincrement())
+  descricao   String?   @db.VarChar(255)
+  desconto    Decimal?  @db.Decimal(5, 2)
+  produto_id  Int
+  data_inicio DateTime? @db.Date
+  data_fim    DateTime? @db.Date
+  produto     produto   @relation(fields: [produto_id], references: [produto_id], onDelete: NoAction, onUpdate: NoAction, map: "oferta_ibfk_1")
+
+  @@index([produto_id], map: "produto_id")
+}
+
+model pedido {
+  id              Int           @id @default(autoincrement())
+  usuario_id      Int
+  endereco_id     Int
+  data_pedido     DateTime?     @default(now()) @db.DateTime(0)
+  forma_pagamento String?       @db.VarChar(50)
+  valor_total     Decimal?      @db.Decimal(10, 2)
+  status          String?       @db.VarChar(30)
+  item_pedido     item_pedido[]
+  usuario         usuario       @relation(fields: [usuario_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "pedido_ibfk_1")
+  endereco        endereco      @relation(fields: [endereco_id], references: [endereco_id], onDelete: NoAction, onUpdate: NoAction, map: "pedido_ibfk_2")
+
+  @@index([endereco_id], map: "endereco_id")
+  @@index([usuario_id], map: "usuario_id")
+}
+
+model produto {
+  produto_id     Int             @id @default(autoincrement())
+  nome           String          @db.VarChar(150)
+  descricao      String?         @db.Text
+  marca          String?         @db.VarChar(100)
+  preco          Decimal         @db.Decimal(10, 2)
+  imagem         String?         @db.VarChar(255)
+  estoque        Int?            @default(0)
+  especificacoes String?         @db.Text
+  categoria_id   Int
+  fornecedor_id  Int
+  avaliacao      avaliacao[]
+  comentario     comentario[]
+  favorito       favorito[]
+  item_carrinho  item_carrinho[]
+  item_pedido    item_pedido[]
+  oferta         oferta[]
+  categoria      categoria       @relation(fields: [categoria_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "produto_ibfk_1")
+  fornecedor     fornecedor      @relation(fields: [fornecedor_id], references: [fornecedor_id], onDelete: NoAction, onUpdate: NoAction, map: "produto_ibfk_2")
+
+  @@index([categoria_id], map: "categoria_id")
+  @@index([fornecedor_id], map: "fornecedor_id")
+}
+
+model usuario {
+  id                   Int                   @id @default(autoincrement())
+  nome                 String                @db.VarChar(100)
+  sobrenome            String                @db.VarChar(100)
+  email                String                @unique(map: "email") @db.VarChar(150)
+  senha                String                @db.VarChar(255)
+  cpf                  String                @unique(map: "cpf") @db.VarChar(14)
+  telefone             String?               @db.VarChar(20)
+  data_nascimento      DateTime?             @db.Date
+  data_cadastro        DateTime?             @default(now()) @db.DateTime(0)
+  avaliacao            avaliacao[]
+  carrinho             carrinho[]
+  comentario           comentario[]
+  configuracao_usuario configuracao_usuario?
+  endereco             endereco[]
+  favorito             favorito[]
+  pedido               pedido[]
+}
