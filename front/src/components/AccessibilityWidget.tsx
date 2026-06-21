@@ -61,7 +61,7 @@ const pararLeitura = () => {
      style={{
   position: "fixed",
   left: "20px",
-  top: "120px",
+  top: "100px",
   zIndex: 9999
 }}
     >

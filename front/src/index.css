@@ -10,29 +10,25 @@
   color: #fff !important;
 }
 
-.modo-contraste h1,
-.modo-contraste h2,
-.modo-contraste h3,
-.modo-contraste h4,
-.modo-contraste h5,
-.modo-contraste h6,
-.modo-contraste p,
-.modo-contraste span,
-.modo-contraste strong,
-.modo-contraste a,
-.modo-contraste label {
+.modo-contraste main h1,
+.modo-contraste main h2,
+.modo-contraste main h3,
+.modo-contraste main p,
+.modo-contraste main span,
+.modo-contraste main strong,
+.modo-contraste main a,
+.modo-contraste main label {
   color: #fff !important;
 }
 
-.modo-contraste button {
-  background-color: #ff5a00 !important;
-  color: #fff !important;
-}
-
-.modo-contraste article {
+.modo-contraste main article {
   background-color: #111 !important;
   color: #fff !important;
   border: 1px solid #fff !important;
 }
-/* Botão do VLibras */
 
+.modo-contraste main button {
+  background-color: #ff5a00 !important;
+  color: #fff !important;
+  border: 1px solid #fff !important;
+}
