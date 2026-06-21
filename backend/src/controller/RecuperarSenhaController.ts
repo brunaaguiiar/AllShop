@@ -1,0 +1,44 @@
+import { Request, Response } from 'express'
+import { PrismaClient } from '@prisma/client'
+import { EmailService } from '../services/email.service'
+import bcrypt from 'bcrypt'
+
+const prisma = new PrismaClient()
+const emailService = new EmailService()
+
+export class RecuperarSenhaController {
+  async recuperar(req: Request, res: Response) {
+    try {
+      const { email } = req.body;
+
+      if (!email) {
+        return res.status(400).json({ error: 'O e-mail é obrigatório.' })
+      }
+
+      const usuario = await prisma.usuario.findUnique({
+        where: { email }
+      })
+
+      if (!usuario) {
+        return res.status(200).json({ message: 'Se o e-mail estiver cadastrado, as instruções foram enviadas.' })
+      }
+
+      const senhaProvisoria = Math.random().toString(36).slice(-6)
+
+      const senhaCriptografada = await bcrypt.hash(senhaProvisoria, 10)
+
+      await prisma.usuario.update({
+        where: { email },
+        data: {
+          senha: senhaCriptografada 
+        }
+      });
+
+      await emailService.enviarEmailRecuperacao(usuario.email, usuario.nome, senhaProvisoria)
+
+      return res.status(200).json({ message: 'E-mail de recuperação enviado com sucesso!' })
+    } catch (error: any) {
+      return res.status(500).json({ error: error.message })
+    }
+  }
+}
