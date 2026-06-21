@@ -31,7 +31,7 @@ export class CadastroService {
       cpf: dados.cpf,
       telefone: dados.telefone,
       data_nascimento: dados.data_nascimento
-    });
+    })
 
     return {
       id: novoUsuario.id,

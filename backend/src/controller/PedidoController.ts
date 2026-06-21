@@ -7,7 +7,7 @@ export class PedidoController {
   async criar(req: Request, res: Response) {
     try {
       const usuario_id = Number(req.headers['user-id'])
-      const { endereco_id, forma_pagamento, itens } = req.body;
+      const { endereco_id, forma_pagamento, itens } = req.body
 
       if (!usuario_id) {
         return res.status(401).json({ error: 'Usuário não autenticado.' })
@@ -22,7 +22,7 @@ export class PedidoController {
         endereco_id: Number(endereco_id),
         forma_pagamento,
         itens
-      });
+      })
 
       return res.status(201).json({ message: 'Pedido registrado com sucesso!', pedido })
     } catch (error: any) {

@@ -20,7 +20,7 @@ export class ProdutoController {
       return res.status(200).json(produtos);
     } catch (error) {
       console.error("Erro ao listar produtos:", error);
-      return res.status(500).json({ erro: "Erro ao buscar produtos." });
+      return res.status(500).json({ erro: "Erro ao buscar produtos." })
     }
   }
 }

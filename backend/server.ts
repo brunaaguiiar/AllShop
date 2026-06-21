@@ -1,7 +1,8 @@
 import express from "express";
 import cors from "cors";
 import { catalogoRoutes } from "./src/routes/Catalogo.routes";
-import { usuarioRoutes } from "./src/routes/Usuario.routes"; 
+import { usuarioRoutes } from "./src/routes/Usuario.routes";
+import pedidoRoutes from "./src/routes/Pedido.routes";
 
 const app = express();
 
@@ -10,6 +11,7 @@ app.use(express.json());
 
 app.use(catalogoRoutes); 
 app.use(usuarioRoutes); 
+app.use(pedidoRoutes);
 
 app.get("/", (req, res) => {
   res.send("API do AllShop funcionando");

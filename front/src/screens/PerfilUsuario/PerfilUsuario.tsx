@@ -1,60 +1,138 @@
 import { Button } from "@heroui/react";
-import { IoPersonOutline, IoMailOutline, IoLogOutOutline, IoBagHandleOutline, IoLocationOutline, IoCreateOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
+import {
+  IoBagHandleOutline,
+  IoCardOutline,
+  IoCreateOutline,
+  IoLocationOutline,
+  IoLogOutOutline,
+  IoMailOutline,
+  IoPersonOutline,
+  IoCallOutline,
+} from "react-icons/io5";
+
+const usuarioPadrao = {
+  nome: "Ana Luiza",
+  email: "analuiza@email.com",
+  telefone: "(11) 99999-9999",
+};
+
+function buscarUsuarioSalvo() {
+  try {
+    const usuario = localStorage.getItem("allshop:usuario");
+    return usuario ? JSON.parse(usuario) : usuarioPadrao;
+  } catch {
+    return usuarioPadrao;
+  }
+}
 
 export default function PerfilUsuario() {
+  const navigate = useNavigate();
+  const usuarioSalvo = buscarUsuarioSalvo();
+
+  const sair = () => {
+    localStorage.removeItem("allshop:token");
+    localStorage.removeItem("allshop:usuario");
+    sessionStorage.clear();
+    navigate("/login");
+  };
+
+  const botaoPadrao = `
+    w-full
+    h-16
+    rounded-xl
+    text-lg
+    font-semibold
+    flex
+    items-center
+    justify-center
+    gap-3
+    transition-all
+    duration-300
+    hover:bg-orange-500
+    hover:text-white
+    hover:scale-[1.02]
+    focus:ring-4
+    focus:ring-orange-300
+  `;
+
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center p-4">
       <div className="bg-white p-6 rounded-2xl shadow-lg w-[350px]">
-        
-        <h1 className="text-3xl font-bold text-center mb-2">
-          Meu Perfil
-        </h1>
+        <h1 className="text-3xl font-bold text-center mb-2">Meu Perfil</h1>
 
-        <p className="text-gray-500 text-center mb-8">
-          Informações da conta
-        </p>
+        <p className="text-gray-500 text-center mb-8">Informacoes da conta</p>
 
         <div className="flex flex-col gap-4">
-          
-          {/* Campo Nome */}
           <div className="border rounded-xl p-3 flex items-center gap-3">
             <IoPersonOutline className="text-gray-400 text-xl" />
             <div>
               <p className="text-gray-400 text-sm">Nome</p>
-              <h2 className="font-semibold text-gray-800">Ana Luíza</h2>
+              <h2 className="font-semibold text-gray-800">
+                {usuarioSalvo.nome}
+              </h2>
             </div>
           </div>
 
-          {/* Campo E-mail */}
           <div className="border rounded-xl p-3 flex items-center gap-3">
             <IoMailOutline className="text-gray-400 text-xl" />
             <div>
               <p className="text-gray-400 text-sm">E-mail</p>
-              <h2 className="font-semibold text-gray-800">analuiza@email.com</h2>
+              <h2 className="font-semibold text-gray-800">
+                {usuarioSalvo.email}
+              </h2>
             </div>
           </div>
 
-          {/* Botões ajustados para aceitar classes puras do Tailwind */}
-          <Button className="bg-black text-white font-medium rounded-xl flex items-center justify-center gap-2 py-2.5">
-            <IoCreateOutline className="text-lg" />
+          <div className="border rounded-xl p-3 flex items-center gap-3">
+            <IoCallOutline className="text-gray-400 text-xl" />
+            <div>
+              <p className="text-gray-400 text-sm">Telefone</p>
+              <h2 className="font-semibold text-gray-800">
+                {usuarioSalvo.telefone ?? usuarioPadrao.telefone}
+              </h2>
+            </div>
+          </div>
+
+          <Button
+            onPress={() => navigate("/editar-perfil")}
+            className={`${botaoPadrao} bg-black text-white`}
+          >
+            <IoCreateOutline className="text-2xl" />
             Editar Perfil
           </Button>
 
-          <Button className="border border-gray-300 font-medium rounded-xl text-gray-700 bg-white flex items-center justify-center gap-2 py-2.5">
-            <IoBagHandleOutline className="text-lg" />
+          <Button
+            onPress={() => navigate("/meus-pedidos")}
+            className={`${botaoPadrao} bg-white border border-gray-300 text-gray-700`}
+          >
+            <IoBagHandleOutline className="text-2xl" />
             Meus Pedidos
           </Button>
 
-          <Button className="border border-gray-300 font-medium rounded-xl text-gray-700 bg-white flex items-center justify-center gap-2 py-2.5">
-            <IoLocationOutline className="text-lg text-gray-500" />
-            Endereços
+          <Button
+            onPress={() => navigate("/enderecos")}
+            className={`${botaoPadrao} bg-white border border-gray-300 text-gray-700`}
+          >
+            <IoLocationOutline className="text-2xl" />
+            Enderecos
           </Button>
 
-          <Button className="bg-red-500 text-white font-medium rounded-xl flex items-center justify-center gap-2 py-2.5">
-            <IoLogOutOutline className="text-lg" />
+          <Button
+            onPress={() => navigate("/minha-carteira")}
+            className={`${botaoPadrao} bg-white border border-gray-300 text-gray-700`}
+          >
+            <IoCardOutline className="text-2xl" />
+            Minha carteira / Cartoes
+          </Button>
+
+          <Button
+            onPress={sair}
+            className={`${botaoPadrao} bg-red-500 text-white hover:bg-red-700`}
+          >
+            <IoLogOutOutline className="text-2xl" />
             Sair
           </Button>
-
         </div>
       </div>
     </div>
