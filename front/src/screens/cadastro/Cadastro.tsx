@@ -149,7 +149,6 @@ export default function Cadastro() {
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-              {/* Campo: Senha */}
               <div className="flex flex-col gap-1">
                 <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
                   Senha *

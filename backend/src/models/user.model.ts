@@ -22,8 +22,24 @@ export class UserModel {
         senha: dados.senhaCriptografada,
         cpf: dados.cpf ?? "",
         telefone: dados.telefone ?? null,
-        data_nascimento: dados.data_nascimento ? new Date(dados.data_nascimento) : null
-      }
+        data_nascimento: dados.data_nascimento ? new Date(dados.data_nascimento) : null,
+      },
+    });
+  }
+
+  async update(userId: string, data: { nome?: string; email?: string; telefone?: string }) {
+    const id = Number(userId);
+    if (!id) {
+      throw new Error("ID de usuário inválido.");
+    }
+
+    return await prisma.usuario.update({
+      where: { id },
+      data: {
+        nome: data.nome,
+        email: data.email,
+        telefone: data.telefone,
+      },
     });
   }
 }

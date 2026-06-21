@@ -182,6 +182,7 @@ model usuario {
   telefone             String?               @db.VarChar(20)
   data_nascimento      DateTime?             @db.Date
   data_cadastro        DateTime?             @default(now()) @db.DateTime(0)
+  role                 String                @default("USER") @db.VarChar(20)
   avaliacao            avaliacao[]
   carrinho             carrinho[]
   comentario           comentario[]

@@ -11,6 +11,7 @@ import EditarPerfil from "./screens/PerfilUsuario/EditarPerfil";
 import PaginaPerfilAcao from "./screens/PerfilUsuario/PaginaPerfilAcao";
 import ProdutoDetalhe from "./screens/produto/ProdutoDetalhe";
 import MeusPedidos from "./screens/MeusPedidos/meusPedidos";
+import Fornecedores from "./screens/fornecedores/fornecedores";
 
 const ProtectedLayout = () => {
   return (
@@ -26,27 +27,23 @@ const ProtectedLayout = () => {
 export default function Router() {
   return (
     <Routes>
-      {/* 🔓 Rotas Públicas (Acessíveis sem login) */}
       <Route path="/login" element={<Login />} />
       <Route path="/cadastro" element={<Cadastro />} />
       
-      {/* 💡 Padronizado para /recuperar-senha (com hífen) */}
       <Route path="/recuperar-senha" element={<RecuperarSenha />} />
       
-      {/* 🔀 Redirecionamento extra: se digitar colado (/recuperarsenha), joga para o certo */}
       <Route path="/recuperarsenha" element={<Navigate to="/recuperar-senha" replace />} />
       <Route path="/recuperar" element={<Navigate to="/recuperar-senha" replace />} />
 
-      {/* 🔒 Rotas Protegidas (Dentro do Layout com a NavBar) */}
       <Route element={<ProtectedLayout />}>
         <Route path="/" element={<Navigate to="/home" />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/fornecedores" element={<Fornecedores />} />
         <Route path="/ajuda" element={<Ajuda />} />
         <Route path="/perfil" element={<PerfilUsuario />} />
         <Route path="/sobre" element={<Sobre />} />
         <Route path="/editar-perfil" element={<EditarPerfil />} />
         <Route path="/meusPedidos" element={<MeusPedidos />} />
-        {/* Unificando as rotas de pedidos para carregar o mesmo componente */}
         <Route path="/meus-pedidos" element={<MeusPedidos />} /> 
         <Route path="/pedidos" element={<MeusPedidos />} />
         <Route path="/enderecos" element={<PaginaPerfilAcao tipo="enderecos" />} />
@@ -54,7 +51,6 @@ export default function Router() {
         <Route path="/produto/:id" element={<ProdutoDetalhe />} />
       </Route>
 
-      {/* 🌐 Rota de fuga: se o usuário digitar qualquer coisa inexistente, manda para a Home */}
       <Route path="*" element={<Navigate to="/home" replace />} />
     </Routes>
   );

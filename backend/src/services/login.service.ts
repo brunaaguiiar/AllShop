@@ -10,15 +10,22 @@ export class LoginService {
     if (!usuario) {
       throw new Error("E-mail ou senha incorretos.");
     }
+    
     const senhaEstaCorreta = await bcrypt.compare(senhaPlana, usuario.senha);
     if (!senhaEstaCorreta) {
       throw new Error("E-mail ou senha incorretos.");
     }
+    
     const token = jwt.sign({ id: usuario.id }, "SUA_CHAVE_SECRETA", { expiresIn: "1d" });
 
     return {
-      usuario: { nome: usuario.nome, email: usuario.email },
+      usuario: { 
+        id: usuario.id, 
+        nome: usuario.nome, 
+        email: usuario.email, 
+        role: (usuario as any).role 
+      },
       token
-    };
+    }
   }
 }
