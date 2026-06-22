@@ -1,13 +1,10 @@
-import { Router } from 'express'
-import { FornecedorController } from '../controller/fornecedorController'
+import { Router } from "express"
+import FavoritoController from "../controller/FavoritosController"
 
-const fornecedorRoutes = Router()
-const fornecedorController = new FornecedorController()
+const router = Router()
 
-fornecedorRoutes.post('/fornecedores', fornecedorController.criar)
-fornecedorRoutes.get('/fornecedores', fornecedorController.listar)
-fornecedorRoutes.get('/fornecedores/:id', fornecedorController.obterPorId)
-fornecedorRoutes.put('/fornecedores/:id', fornecedorController.atualizar)
-fornecedorRoutes.delete('/fornecedores/:id', fornecedorController.eliminar)
+router.post("/favoritos", FavoritoController.adicionar)
+router.get("/favoritos/:usuarioId", FavoritoController.listar)
+router.delete("/favoritos", FavoritoController.remover)
 
-export default fornecedorRoutes
+export default router

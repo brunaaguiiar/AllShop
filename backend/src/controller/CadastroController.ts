@@ -1,12 +1,12 @@
-import { Request, Response } from "express";
-import { CadastroService } from "../services/cadastro.service";
+import { Request, Response } from "express"
+import { CadastroService } from "../services/cadastro.service"
 
-const cadastroService = new CadastroService();
+const cadastroService = new CadastroService()
 
 export class CadastroController {
   async handle(req: Request, res: Response): Promise<Response> {
     try {
-      const { nomeCompleto, email, senha, cpf, telefone, data_nascimento } = req.body;
+      const { nomeCompleto, email, senha, cpf, telefone, data_nascimento } = req.body
 
       const novoUsuario = await cadastroService.execute({
         nomeCompleto,
@@ -15,12 +15,12 @@ export class CadastroController {
         cpf,
         telefone,
         data_nascimento
-      });
+      })
 
       return res.status(201).json({ 
         mensagem: "Usuário cadastrado com sucesso!",
         usuario: novoUsuario
-      });
+      })
 
     } catch (error: any) {
       if (error.message === "Este e-mail já está cadastrado.") {

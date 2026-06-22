@@ -58,7 +58,6 @@ export default function MeusPedidos() {
               }
             }
           }
-
           if (error instanceof Error) return error.message;
           if (typeof error === "string") return error;
           return "Erro ao carregar o histórico de pedidos.";
@@ -74,8 +73,8 @@ export default function MeusPedidos() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-8 pt-24">
-      <section className="w-full max-w-2xl rounded-2xl bg-white p-8 shadow-lg text-center">
+    <div className="min-h-screen bg-gray-100 px-4 py-8 pt-24">
+      <section className="w-full max-w-2xl mx-auto rounded-2xl bg-white p-8 shadow-lg text-center">
         <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-orange-100 text-orange-500">
           <IoBagHandleOutline className="text-3xl" />
         </div>
@@ -83,6 +82,7 @@ export default function MeusPedidos() {
         <p className="mt-3 text-gray-500">
           Acompanhe o status e o histórico das suas compras feitas na AllShop.
         </p>
+
         {carregando && (
           <div className="my-12 flex flex-col items-center justify-center gap-3">
             <Spinner color="warning" size="lg" />
@@ -91,17 +91,17 @@ export default function MeusPedidos() {
             </p>
           </div>
         )}
+
         {!carregando && erro && (
           <div className="mt-6 rounded-xl bg-red-50 p-4 border border-red-200 text-left flex items-start gap-3">
             <IoAlertCircleOutline className="text-2xl text-red-500 mt-0.5 flex-shrink-0" />
             <div>
-              <h3 className="font-semibold text-red-800">
-                Ops! Algo deu errado
-              </h3>
+              <h3 className="font-semibold text-red-800">Ops! Algo deu errado</h3>
               <p className="text-sm text-red-700 mt-1">{erro}</p>
             </div>
           </div>
         )}
+
         {!carregando && !erro && pedidos.length === 0 && (
           <div className="my-12 border-2 border-dashed border-gray-200 rounded-2xl p-8">
             <p className="text-gray-500 font-medium">
@@ -115,6 +115,7 @@ export default function MeusPedidos() {
             </Button>
           </div>
         )}
+
         {!carregando && !erro && pedidos.length > 0 && (
           <div className="mt-6 flex flex-col gap-4 text-left">
             {pedidos.map((pedido) => (
@@ -126,14 +127,9 @@ export default function MeusPedidos() {
                   <div className="flex items-start gap-3">
                     <IoCheckmarkCircleOutline className="mt-1 text-xl text-orange-500" />
                     <div>
-                      <h2 className="font-bold text-gray-800">
-                        Pedido #{pedido.id}
-                      </h2>
+                      <h2 className="font-bold text-gray-800">Pedido #{pedido.id}</h2>
                       <p className="text-xs text-gray-400 mt-0.5">
-                        Realizado em:{" "}
-                        {new Date(pedido.data_pedido).toLocaleDateString(
-                          "pt-BR"
-                        )}
+                        Realizado em: {new Date(pedido.data_pedido).toLocaleDateString("pt-BR")}
                       </p>
                     </div>
                   </div>
@@ -143,23 +139,16 @@ export default function MeusPedidos() {
                 </div>
                 <div className="flex flex-col gap-2 text-sm text-gray-600">
                   <p>
-                    <strong>Forma de Pagamento:</strong>{" "}
-                    {pedido.forma_pagamento}
+                    <strong>Forma de Pagamento:</strong> {pedido.forma_pagamento}
                   </p>
                   <div className="mt-2 rounded-lg bg-white p-3 border border-gray-100 flex flex-col gap-1.5">
                     <strong className="text-xs uppercase tracking-wider text-gray-400 mb-1">
                       Itens do Pedido:
                     </strong>
                     {pedido.item_pedido?.map((item) => (
-                      <div
-                        key={item.id}
-                        className="flex justify-between text-xs sm:text-sm"
-                      >
+                      <div key={item.id} className="flex justify-between text-xs sm:text-sm">
                         <span>
-                          {item.quantidade}x{" "}
-                          <span className="font-medium text-gray-800">
-                            {item.produto?.nome}
-                          </span>
+                          {item.quantidade}x <span className="font-medium text-gray-800">{item.produto?.nome}</span>
                         </span>
                         <span className="text-gray-500">
                           R$ {item.subtotal.toFixed(2).replace(".", ",")}
@@ -167,37 +156,30 @@ export default function MeusPedidos() {
                       </div>
                     ))}
                   </div>
-
                   <p className="mt-2 text-right text-base font-bold text-gray-800">
-                    Total:{" "}
-                    <span className="text-orange-500">
-                      R${" "}
-                      {Number(pedido.valor_total).toFixed(2).replace(".", ",")}
-                    </span>
+                    Total: <span className="text-orange-500">R$ {Number(pedido.valor_total).toFixed(2).replace(".", ",")}</span>
                   </p>
                 </div>
               </div>
             ))}
           </div>
         )}
+
         <div className="mt-8 grid gap-3 sm:grid-cols-2">
           <Button
             onPress={() => navigate("/perfil")}
             className="h-12 bg-black text-white rounded-xl font-semibold"
           >
             <span className="flex w-full items-center justify-center gap-2">
-              <IoArrowBackOutline className="text-xl" />
-              Voltar ao perfil
+              <IoArrowBackOutline className="text-xl" /> Voltar ao perfil
             </span>
           </Button>
-
           <Button
             onPress={() => navigate("/home")}
             className="h-12 border border-gray-300 bg-white text-gray-700 rounded-xl font-semibold"
           >
             <span className="flex w-full items-center justify-center gap-2">
-              <IoHomeOutline className="text-xl" />
-              Ir para home
+              <IoHomeOutline className="text-xl" /> Ir para home
             </span>
           </Button>
         </div>

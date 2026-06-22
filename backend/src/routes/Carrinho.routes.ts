@@ -1,9 +1,9 @@
-import { Router } from "express";
-import { CarrinhoController } from "../controller/CarrinhoController";
+import { Router } from "express"
+import { CarrinhoController } from "../controller/CarrinhoController"
 
 const carrinhoRoutes = Router();
 
-const carrinhoController = new CarrinhoController();
+const carrinhoController = new CarrinhoController()
 
 carrinhoRoutes.get(
   "/carrinho",
@@ -20,4 +20,4 @@ carrinhoRoutes.delete(
   carrinhoController.removerItem.bind(carrinhoController)
 );
 
-export { carrinhoRoutes };
+export { carrinhoRoutes }

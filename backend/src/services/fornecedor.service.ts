@@ -14,7 +14,7 @@ export class FornecedorService {
     })
 
     if (fornecedorExistente) {
-      throw new Error('Já existe um fornecedor cadastrado com este CNPJ.');
+      throw new Error('Já existe um fornecedor cadastrado com este CNPJ.')
     }
 
     return await prisma.fornecedor.create({

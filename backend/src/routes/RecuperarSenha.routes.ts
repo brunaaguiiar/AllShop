@@ -1,9 +1,9 @@
-import { Router } from "express";
-import { RecuperarSenhaController } from "../controller/RecuperarSenhaController";
+import { Router } from "express"
+import { RecuperarSenhaController } from "../controller/RecuperarSenhaController"
 
-const RecuperarSenhaRouter = Router();
+const RecuperarSenhaRouter = Router()
 const recuperarSenhaController = new RecuperarSenhaController();
 
-RecuperarSenhaRouter.post("/recuperar-senha", recuperarSenhaController.recuperar);
+RecuperarSenhaRouter.post("/recuperar-senha", recuperarSenhaController.recuperar)
 
-export default RecuperarSenhaRouter;
+export default RecuperarSenhaRouter

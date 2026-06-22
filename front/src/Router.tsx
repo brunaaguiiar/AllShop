@@ -11,7 +11,8 @@ import EditarPerfil from "./screens/PerfilUsuario/EditarPerfil";
 import PaginaPerfilAcao from "./screens/PerfilUsuario/PaginaPerfilAcao";
 import ProdutoDetalhe from "./screens/produto/ProdutoDetalhe";
 import MeusPedidos from "./screens/MeusPedidos/meusPedidos";
-import Fornecedores from "./screens/fornecedores/fornecedores";
+import Fornecedor from "./screens/fornecedor/fornecedor";
+import Favoritos from "./screens/favoritos/Favoritos";
 
 const ProtectedLayout = () => {
   return (
@@ -29,29 +30,45 @@ export default function Router() {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/cadastro" element={<Cadastro />} />
-      
+
       <Route path="/recuperar-senha" element={<RecuperarSenha />} />
-      
-      <Route path="/recuperarsenha" element={<Navigate to="/recuperar-senha" replace />} />
-      <Route path="/recuperar" element={<Navigate to="/recuperar-senha" replace />} />
+
+      <Route
+        path="/recuperarsenha"
+        element={<Navigate to="/recuperar-senha" replace />}
+      />
+      <Route
+        path="/recuperar"
+        element={<Navigate to="/recuperar-senha" replace />}
+      />
+      <Route path="/Cadastro" element={<Cadastro />} />
 
       <Route element={<ProtectedLayout />}>
         <Route path="/" element={<Navigate to="/home" />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/fornecedores" element={<Fornecedores />} />
         <Route path="/ajuda" element={<Ajuda />} />
         <Route path="/perfil" element={<PerfilUsuario />} />
         <Route path="/sobre" element={<Sobre />} />
         <Route path="/editar-perfil" element={<EditarPerfil />} />
         <Route path="/meusPedidos" element={<MeusPedidos />} />
-        <Route path="/meus-pedidos" element={<MeusPedidos />} /> 
+        <Route path="/meus-pedidos" element={<MeusPedidos />} />
         <Route path="/pedidos" element={<MeusPedidos />} />
-        <Route path="/enderecos" element={<PaginaPerfilAcao tipo="enderecos" />} />
-        <Route path="/minha-carteira" element={<PaginaPerfilAcao tipo="carteira" />} />
+        <Route path="/fornecedor" element={<Fornecedor />} />
+        <Route path="/favoritos" element={<Favoritos />} />
+        <Route
+          path="/enderecos"
+          element={<PaginaPerfilAcao tipo="enderecos" />}
+        />
+        <Route
+          path="/minha-carteira"
+          element={<PaginaPerfilAcao tipo="carteira" />}
+        />
         <Route path="/produto/:id" element={<ProdutoDetalhe />} />
+        <Route path="/produto/:id" element={<ProdutoDetalhe />} />
+        <Route path="/perfil" element={<PerfilUsuario />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/home" replace />} />
     </Routes>
-  );
+  )
 }

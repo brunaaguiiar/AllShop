@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function RecuperarSenha() {
-  const emailId = useId();
-  const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [sent, setSent] = useState(false);
-  const [erro, setErro] = useState("");
+  const emailId = useId()
+  const navigate = useNavigate()
+  const [email, setEmail] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [sent, setSent] = useState(false)
+  const [erro, setErro] = useState("")
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,7 +18,7 @@ export default function RecuperarSenha() {
     try {
       await axios.post("http://localhost:3333/recuperar-senha", {
         email,
-      });
+      })
 
       setSent(true);
     } catch (error: unknown) {
@@ -51,7 +51,6 @@ export default function RecuperarSenha() {
   return (
     <section className="mx-auto flex min-h-screen max-w-md items-center px-4 py-12 font-sans">
       <div className="w-full rounded-3xl border border-gray-100 p-8 bg-white text-black shadow-2xl space-y-6">
-        {/* Cabeçalho do Card */}
         <div className="text-center">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-500 text-white font-bold text-xl shadow-lg shadow-orange-500/20">
             A
@@ -63,13 +62,11 @@ export default function RecuperarSenha() {
             {sent ? "Sucesso!" : "Digite seu email abaixo."}
           </p>
         </div>
-
         {erro && (
           <div className="bg-red-50 text-red-600 p-3 rounded-xl text-xs font-medium border border-red-200">
             {erro}
           </div>
         )}
-
         {sent ? (
           <div className="space-y-5 text-center">
             <div className="text-sm text-green-600 bg-green-50/70 p-4 rounded-xl border border-green-200 font-medium">
@@ -122,5 +119,5 @@ export default function RecuperarSenha() {
         )}
       </div>
     </section>
-  );
+  )
 }

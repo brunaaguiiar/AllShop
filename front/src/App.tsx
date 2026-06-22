@@ -34,9 +34,9 @@ function App() {
       script.async = true;
 
       script.onload = () => {
-        // @ts-ignore
+        // @ts-expect-error window.VLibras is injected by external script
         if (window.VLibras) {
-          // @ts-ignore
+          // @ts-expect-error window.VLibras.Widget is provided by external plugin
           new window.VLibras.Widget("https://vlibras.gov.br/app");
         }
       };

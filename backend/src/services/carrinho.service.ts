@@ -1,4 +1,4 @@
-import { prisma } from "../../lib/prisma";
+import { prisma } from "../../lib/prisma"
 
 export class CarrinhoService {
 
@@ -45,10 +45,10 @@ export class CarrinhoService {
 
     const carrinho = await prisma.carrinho.findFirst({
       where: { id_usuario }
-    });
+    })
 
     if (!carrinho) {
-      throw new Error("Carrinho não encontrado");
+      throw new Error("Carrinho não encontrado")
     }
 
     return await prisma.item_carrinho.delete({
@@ -58,6 +58,6 @@ export class CarrinhoService {
           id_produto
         }
       }
-    });
+    })
   }
 }

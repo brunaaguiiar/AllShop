@@ -18,4 +18,4 @@ const authAdmin = async (req, res, next) => {
     return res.status(500).json({ message: "Erro interno." })
   }
 }
-module.exports = authAdmin;
+module.exports = authAdmin

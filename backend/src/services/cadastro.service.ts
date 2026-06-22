@@ -1,4 +1,4 @@
-import { UserModel } from "../models/user.model";
+import { UserModel } from "../models/user.model"
 import bcrypt from "bcrypt";
 
 const userModel = new UserModel();
@@ -12,16 +12,16 @@ export class CadastroService {
     telefone?: string;
     data_nascimento?: string;
   }) {
-    const usuarioExiste = await userModel.findByEmail(dados.email);
+    const usuarioExiste = await userModel.findByEmail(dados.email)
     if (usuarioExiste) {
-      throw new Error("Este e-mail já está cadastrado.");
+      throw new Error("Este e-mail já está cadastrado.")
     }
 
-    const partesDoNome = dados.nomeCompleto.trim().split(" ");
-    const nome = partesDoNome[0];
-    const sobrenome = partesDoNome.slice(1).join(" ") || "Não Informado";
+    const partesDoNome = dados.nomeCompleto.trim().split(" ")
+    const nome = partesDoNome[0]
+    const sobrenome = partesDoNome.slice(1).join(" ") || "Não Informado"
 
-    const senhaEscondida = await bcrypt.hash(dados.senhaPlana, 10);
+    const senhaEscondida = await bcrypt.hash(dados.senhaPlana, 10)
 
     const novoUsuario = await userModel.create({
       nome,
@@ -37,6 +37,6 @@ export class CadastroService {
       id: novoUsuario.id,
       nome: novoUsuario.nome,
       email: novoUsuario.email
-    };
+    }
   }
 }

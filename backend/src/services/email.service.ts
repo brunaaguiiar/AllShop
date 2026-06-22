@@ -1,4 +1,4 @@
-import nodemailer from 'nodemailer';
+import nodemailer from 'nodemailer'
 
 export class EmailService {
   private transporter
@@ -16,7 +16,7 @@ export class EmailService {
       tls: {
         rejectUnauthorized: false 
       }
-    });
+    })
   }
 
   async enviarEmailRecuperacao(emailDestino: string, nomeUsuario: string, novaSenhaProvisoria: string) {
@@ -37,7 +37,7 @@ export class EmailService {
           <p style="font-size: 11px; color: #999;">Se você não solicitou essa alteração, por favor desconsidere este e-mail.</p>
         </div>
       `
-    };
+    }
 
     return await this.transporter.sendMail(mailOptions)
   }

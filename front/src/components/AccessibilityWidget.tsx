@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 export default function AccessibilityWidget() {
   const [aberto, setAberto] = useState(false);
   const [fonte, setFonte] = useState(16);
-  
+
   const [contraste, setContraste] = useState(() => {
     return localStorage.getItem("allshop:altoContraste") === "true";
   });
@@ -41,7 +41,7 @@ export default function AccessibilityWidget() {
   const alternarContraste = () => {
     const novoContraste = !contraste;
     setContraste(novoContraste);
-    
+
     // Salva a escolha do usuário para persistir entre as telas (Login -> Home)
     localStorage.setItem("allshop:altoContraste", String(novoContraste));
     document.body.classList.toggle("modo-contraste", novoContraste);
@@ -58,9 +58,16 @@ export default function AccessibilityWidget() {
   const pararLeitura = () => {
     speechSynthesis.cancel();
   };
-  
+
   return (
-    <div style={{ position: "fixed", left: "20px", top: "120px", zIndex: 9999 }}>
+    <div
+      style={{
+        position: "fixed",
+        left: "20px",
+        top: "100px",
+        zIndex: 9999,
+      }}
+    >
       <button
         onClick={() => setAberto(!aberto)}
         aria-label="Abrir menu de acessibilidade"
@@ -74,7 +81,7 @@ export default function AccessibilityWidget() {
           color: "white",
           fontSize: "28px",
           cursor: "pointer",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.3)"
+          boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
         }}
       >
         ♿
@@ -92,26 +99,49 @@ export default function AccessibilityWidget() {
             display: "flex",
             flexDirection: "row",
             gap: "8px",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.3)"
+            boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
           }}
         >
-          <button onClick={aumentarFonte} aria-label="Aumentar tamanho da fonte" title="Aumentar fonte" style={botaoAcessibilidade}>
+          <button
+            onClick={aumentarFonte}
+            aria-label="Aumentar tamanho da fonte"
+            title="Aumentar fonte"
+            style={botaoAcessibilidade}
+          >
             A+
           </button>
 
-          <button onClick={diminuirFonte} aria-label="Diminuir tamanho da fonte" title="Diminuir fonte" style={botaoAcessibilidade}>
+          <button
+            onClick={diminuirFonte}
+            aria-label="Diminuir tamanho da fonte"
+            title="Diminuir fonte"
+            style={botaoAcessibilidade}
+          >
             A-
           </button>
 
-          <button onClick={alternarContraste} aria-label="Ativar ou desativar alto contraste" title="Alto contraste" style={botaoAcessibilidade}>
+          <button
+            onClick={alternarContraste}
+            aria-label="Ativar ou desativar alto contraste"
+            title="Alto contraste"
+            style={botaoAcessibilidade}
+          >
             🌙
           </button>
 
-          <button onClick={lerPagina} title="Ler página" style={botaoAcessibilidade}>
+          <button
+            onClick={lerPagina}
+            title="Ler página"
+            style={botaoAcessibilidade}
+          >
             🔊
           </button>
 
-          <button onClick={pararLeitura} title="Parar leitura" style={botaoAcessibilidade}>
+          <button
+            onClick={pararLeitura}
+            title="Parar leitura"
+            style={botaoAcessibilidade}
+          >
             ⏹️
           </button>
         </div>
@@ -129,5 +159,5 @@ const botaoAcessibilidade = {
   color: "#ff5a00",
   fontWeight: "bold",
   cursor: "pointer",
-  fontSize: "16px"
+  fontSize: "16px",
 };
