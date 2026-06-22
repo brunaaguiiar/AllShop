@@ -1,8 +1,9 @@
 import { Button } from "@heroui/react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FiMinus, FiPlus, FiShoppingBag, FiTrash2 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import heroImage from "../../assets/hero.png";
+
+const API_URL = "http://localhost:3000";
 
 type CartItem = {
   id: number;
@@ -22,17 +23,35 @@ const formatCurrency = (value: number) =>
 export default function Carrinho() {
   const navigate = useNavigate();
 
-  const [items, setItems] = useState<CartItem[]>([
-    {
-      id: 1,
-      name: "Mochila Urban Tech",
-      category: "Acessórios",
-      price: 259.9,
-      quantity: 1,
-      image: heroImage,
-    },
-  ]);
+ const [items, setItems] = useState<CartItem[]>([]);
 
+ useEffect(() => {
+  carregarCarrinho();
+}, []);
+
+async function carregarCarrinho() {
+   try {
+    const response = await fetch(
+      `${API_URL}/carrinho?id_usuario=1`
+    );
+
+    const data = await response.json();
+
+    const produtos = data.item_carrinho.map((item: any) => ({
+      id: item.produto.produto_id,
+      name: item.produto.nome,
+      category: "Produto",
+      price: Number(item.produto.preco),
+      quantity: item.quantidade,
+      image: `/imagens/${item.produto.imagem}`,
+    }));
+
+    setItems(produtos);
+
+  } catch (error) {
+    console.error(error);
+  }
+}
   const subtotal = useMemo(() => {
     return items.reduce((total, item) => total + item.price * item.quantity, 0);
   }, [items]);
@@ -47,11 +66,27 @@ export default function Carrinho() {
     );
   };
 
-  const removeItem = (itemId: number) => {
-    setItems((currentItems) =>
-      currentItems.filter((item) => item.id !== itemId)
+  const removeItem = async (itemId: number) => {
+  try {
+    const response = await fetch(
+      `${API_URL}/carrinho/${itemId}?id_usuario=1`,
+      {
+        method: "DELETE",
+      }
     );
-  };
+
+    if (response.ok) {
+      setItems((currentItems) =>
+        currentItems.filter((item) => item.id !== itemId)
+      );
+    } else {
+      alert("Erro ao remover produto.");
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Erro ao conectar com o servidor.");
+  }
+};
 
   if (items.length === 0) {
     return (
