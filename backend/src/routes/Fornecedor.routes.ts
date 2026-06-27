@@ -1,10 +1,10 @@
-import { Router } from "express"
-import FavoritoController from "../controller/FavoritosController"
+import { Router } from "express";
+import fornecedorController from "../controller/FornecedorController";
 
-const router = Router()
+const router = Router();
 
-router.post("/favoritos", FavoritoController.adicionar)
-router.get("/favoritos/:usuarioId", FavoritoController.listar)
-router.delete("/favoritos", FavoritoController.remover)
+router.get("/fornecedor/produtos", fornecedorController.listar);
+router.post("/fornecedor/produtos", fornecedorController.criar);
+router.delete("/fornecedor/produtos/:id", fornecedorController.deletar);
 
-export default router
+export default router;
