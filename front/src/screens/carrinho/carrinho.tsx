@@ -37,16 +37,47 @@ async function carregarCarrinho() {
 
     const data = await response.json();
 
+    console.log(data);
+
     const produtos = data.item_carrinho.map((item: any) => ({
       id: item.produto.produto_id,
       name: item.produto.nome,
       category: "Produto",
       price: Number(item.produto.preco),
       quantity: item.quantidade,
-      image: `/imagens/${item.produto.imagem}`,
+    image:
+    item.produto.produto_id === 6
+    ? "/imagens/Console PlayStation 5 Slim.png"
+    : item.produto.produto_id === 7
+    ? "/imagens/Controle sem fio Dualsense Midnight.png"
+    : item.produto.produto_id === 8
+    ? "/imagens/Processador Ryzen 5 5600G.png"
+    : item.produto.produto_id === 9
+    ? "/imagens/PC Gamer Completo RGB Ryzen 5.png"
+    : item.produto.produto_id === 10
+    ? "/imagens/Water Cooler Rise Mode Gamer Black.png"
+    : item.produto.produto_id === 11
+    ? "/imagens/Mouse Gamer RGB.png"
+    : item.produto.produto_id === 12
+    ? "/imagens/Teclado Mecânico RGB.png"
+    : item.produto.produto_id === 13
+    ? "/imagens/Headset Gamer HyperX Cloud III.png"
+    : item.produto.produto_id === 14
+    ? "/imagens/Webcam Logitech C920.png"
+    : item.produto.produto_id === 15
+    ? "/imagens/Processador Intel Core Ultra 5.png"
+    : item.produto.produto_id === 16
+    ? "/imagens/Placa de Vídeo RTX 4060.png"
+    : item.produto.produto_id === 17
+    ? "/imagens/Memória RAM Kingston Fury 16GB.png"
+    : item.produto.produto_id === 18
+    ? "/imagens/SSD Kingston NV3 1TB.png"
+    : "/imagens/notebook.png",
     }));
 
     setItems(produtos);
+
+    console.log(produtos);
 
   } catch (error) {
     console.error(error);
@@ -214,7 +245,33 @@ async function carregarCarrinho() {
               </span>
             </div>
 
-            <Button className="mt-7 h-12 w-full rounded-xl bg-orange-500 font-bold text-white shadow-lg shadow-orange-500/20 hover:bg-orange-600">
+            <Button
+             onPress={async () => {
+               try {
+                 const response = await fetch(
+                 "http://localhost:3000/carrinho/finalizar?id_usuario=1",
+                {
+                 method: "POST",
+                }
+              );
+
+    if (!response.ok) {
+      throw new Error("Erro ao finalizar compra");
+    }
+
+    alert("Compra finalizada com sucesso!");
+
+    setItems([]);
+
+    navigate("/home");
+
+  } catch (error) {
+    console.error(error);
+    alert("Erro ao finalizar compra.");
+  }
+}}
+              className="mt-7 h-12 w-full rounded-xl bg-orange-500 font-bold text-white shadow-lg shadow-orange-500/20 hover:bg-orange-600"
+           >
               Finalizar compra
             </Button>
 

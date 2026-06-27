@@ -60,4 +60,25 @@ export class CarrinhoService {
       }
     })
   }
+  async finalizarCompra(id_usuario: number) {
+
+    const carrinho = await prisma.carrinho.findFirst({
+      where: { id_usuario }
+    });
+
+    if (!carrinho) {
+      throw new Error("Carrinho não encontrado");
+    }
+
+    await prisma.item_carrinho.deleteMany({
+      where: {
+        id_carrinho: carrinho.id_carrinho
+      }
+    });
+
+    return {
+      mensagem: "Compra finalizada com sucesso"
+    };
+  }
+
 }
