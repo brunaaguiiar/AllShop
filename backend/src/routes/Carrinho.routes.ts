@@ -20,4 +20,9 @@ carrinhoRoutes.delete(
   carrinhoController.removerItem.bind(carrinhoController)
 );
 
+carrinhoRoutes.post(
+  "/carrinho/finalizar",
+  carrinhoController.finalizarCompra.bind(carrinhoController)
+);
+
 export { carrinhoRoutes };

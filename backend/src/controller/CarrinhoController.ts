@@ -61,4 +61,19 @@ export class CarrinhoController {
       });
     }
   }
+  async finalizarCompra(req: Request, res: Response): Promise<Response> {
+    try {
+      const id_usuario = Number(req.query.id_usuario);
+
+      const resultado = await this.carrinhoService.finalizarCompra(id_usuario);
+
+      return res.status(200).json(resultado);
+    } catch (error) {
+      console.error(error);
+
+      return res.status(500).json({
+        erro: "Erro ao finalizar compra",
+      });
+    }
+  }
 }
