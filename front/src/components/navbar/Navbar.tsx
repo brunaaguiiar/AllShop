@@ -1,8 +1,8 @@
-import { ReactNode, useMemo } from "react"
-import { useNavigate, useLocation } from "react-router-dom"
-import { Button, Link } from "@heroui/react"
-import { LuDoorClosed, LuDoorOpen, LuHeart } from "react-icons/lu"
-import { FiShoppingCart } from "react-icons/fi"
+import { ReactNode, useMemo } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { Button, Link } from "@heroui/react";
+import { LuDoorClosed, LuDoorOpen, LuHeart } from "react-icons/lu";
+import { CiShoppingCart } from "react-icons/ci";
 
 interface Usuario {
   nome: string;
@@ -12,9 +12,9 @@ interface Usuario {
 }
 
 interface NavIconBtnProps {
-  children: ReactNode
-  onPress: () => void
-  ariaLabel: string
+  children: ReactNode;
+  onPress: () => void;
+  ariaLabel: string;
 }
 
 function NavIconBtn({ children, onPress, ariaLabel }: NavIconBtnProps) {
@@ -28,7 +28,7 @@ function NavIconBtn({ children, onPress, ariaLabel }: NavIconBtnProps) {
     >
       {children}
     </Button>
-  )
+  );
 }
 
 export default function NavBar() {
@@ -37,8 +37,8 @@ export default function NavBar() {
 
   const usuarioLogado = useMemo<Usuario | null>(() => {
     try {
-      const salvo = localStorage.getItem("allshop:usuario")
-      return salvo ? (JSON.parse(salvo) as Usuario) : null
+      const salvo = localStorage.getItem("allshop:usuario");
+      return salvo ? (JSON.parse(salvo) as Usuario) : null;
     } catch {
       return null;
     }
@@ -49,7 +49,7 @@ export default function NavBar() {
     { name: "Meus Pedidos", href: "/meus-pedidos" },
     { name: "Sobre", href: "/sobre" },
     { name: "Ajuda", href: "/Ajuda" },
-  ]
+  ];
 
   if (usuarioLogado?.role === "ADMIN") {
     links.push({ name: "Fornecedor", href: "/fornecedor" });
@@ -60,7 +60,7 @@ export default function NavBar() {
     localStorage.removeItem("allshop:usuario");
     sessionStorage.clear();
     navigate("/login");
-  }
+  };
 
   return (
     <header className="fixed top-0 left-0 z-50 w-full border-b border-orange-100 bg-white/80 backdrop-blur-xl transition-all duration-300">
@@ -69,10 +69,12 @@ export default function NavBar() {
           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-orange-500 shadow-lg shadow-orange-500/30">
             <span className="text-lg font-bold text-white">A</span>
           </div>
+
           <span className="text-xl font-bold tracking-tight text-gray-800">
             All<span className="text-orange-500">Shop</span>
           </span>
         </Link>
+
         <div className="hidden items-center gap-8 lg:flex">
           {links.map((link) => (
             <Link
@@ -84,15 +86,22 @@ export default function NavBar() {
             </Link>
           ))}
         </div>
+
         <div className="flex items-center gap-3">
           {!usuarioLogado ? (
             <>
-              <NavIconBtn
+              <Button
+                isIconOnly
+                variant="shadow"
                 onPress={() => navigate("/carrinho")}
-                ariaLabel="Carrinho"
+                className="flex h-12 w-12 items-center justify-center rounded-2xl border border-gray-200 bg-white p-0 transition-all duration-300 hover:border-orange-200 hover:bg-orange-50 hover:shadow-md cursor-pointer"
               >
-                <FiShoppingCart size={22} />
-              </NavIconBtn>
+                <CiShoppingCart
+                  size={24}
+                  className="text-gray-700 transition-all duration-300 hover:scale-110 hover:text-orange-500"
+                />
+              </Button>
+
               <Button
                 onPress={() => navigate("/login")}
                 className="h-12 rounded-2xl bg-orange-500 px-6 font-semibold text-white"
@@ -122,12 +131,17 @@ export default function NavBar() {
                 <LuHeart size={22} className="text-gray-700" />
               </NavIconBtn>
 
-              <NavIconBtn
+              <Button
+                isIconOnly
+                variant="shadow"
                 onPress={() => navigate("/carrinho")}
-                ariaLabel="Carrinho"
+                className="flex h-12 w-12 items-center justify-center rounded-2xl border border-gray-200 bg-white p-0 transition-all duration-300 hover:border-orange-200 hover:bg-orange-50 hover:shadow-md cursor-pointer"
               >
-                <FiShoppingCart size={22} className="text-gray-700" />
-              </NavIconBtn>
+                <CiShoppingCart
+                  size={24}
+                  className="text-gray-700 transition-all duration-300 hover:scale-110 hover:text-orange-500"
+                />
+              </Button>
 
               <NavIconBtn onPress={handleLogout} ariaLabel="Sair">
                 <div className="relative flex items-center justify-center">
@@ -146,5 +160,5 @@ export default function NavBar() {
         </div>
       </nav>
     </header>
-  )
+  );
 }

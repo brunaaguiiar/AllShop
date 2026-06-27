@@ -13,6 +13,7 @@ import ProdutoDetalhe from "./screens/produto/ProdutoDetalhe";
 import MeusPedidos from "./screens/MeusPedidos/meusPedidos";
 import Fornecedor from "./screens/fornecedor/fornecedor";
 import Favoritos from "./screens/favoritos/Favoritos";
+import Carrinho from "./screens/carrinho/carrinho";
 
 const ProtectedLayout = () => {
   return (
@@ -55,6 +56,7 @@ export default function Router() {
         <Route path="/pedidos" element={<MeusPedidos />} />
         <Route path="/fornecedor" element={<Fornecedor />} />
         <Route path="/favoritos" element={<Favoritos />} />
+        <Route path="/carrinho" element={<Carrinho />} />
         <Route
           path="/enderecos"
           element={<PaginaPerfilAcao tipo="enderecos" />}
@@ -70,5 +72,5 @@ export default function Router() {
 
       <Route path="*" element={<Navigate to="/home" replace />} />
     </Routes>
-  )
+  );
 }
