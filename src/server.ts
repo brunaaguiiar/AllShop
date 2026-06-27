@@ -1,15 +1,18 @@
-import express from "express";
-import cors from "cors";
+class ProdutoService {
+  listar() {
+    return [
+      {
+        id: 1,
+        nome: "Notebook",
+        preco: 3500,
+      },
+      {
+        id: 2,
+        nome: "Mouse",
+        preco: 80,
+      },
+    ];
+  }
+}
 
-const app = express();
-
-app.use(cors());
-app.use(express.json());
-
-app.get("/", (req, res) => {
-  res.send("API do AllShop funcionando 🚀");
-});
-
-app.listen(3000, () => {
-  console.log("Servidor rodando na porta 3000");
-});
+export default new ProdutoService();
