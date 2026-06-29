@@ -4,7 +4,7 @@ import { LuHeart, LuShoppingCart } from "react-icons/lu";
 import { listarFavoritos,removerFavorito as removerFavoritoApi,} from "../../services/favoritos";
 
 interface Produto {
-  id: number;
+  produto_id: number;
   nome: string;
   preco: number;
   imagem: string;
@@ -26,8 +26,10 @@ export default function Favoritos() {
     async function load() {
       try {
         const data = await listarFavoritos(usuarioId);
+        console.log("API:", data);
 
         const produtos = data.map((item: FavoritoItem) => item.produto);
+        console.log("Produtos:", produtos);
 
         setFavoritos(produtos);
       } catch (error) {
@@ -42,7 +44,7 @@ export default function Favoritos() {
     try {
       await removerFavoritoApi(usuarioId, produtoId);
 
-      setFavoritos((prev) => prev.filter((item) => item.id !== produtoId));
+      setFavoritos((prev) => prev.filter((item) => item.produto_id !== produtoId));
     } catch (error) {
       console.error("Erro ao remover favorito:", error);
     }
@@ -88,7 +90,7 @@ export default function Favoritos() {
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3 lg:grid-cols-4">
             {favoritos.map((produto) => (
               <div
-                key={produto.id}
+                key={produto.produto_id}
                 className="overflow-hidden rounded-3xl bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
               >
                 <div className="relative">
@@ -98,7 +100,7 @@ export default function Favoritos() {
                     className="h-56 w-full object-cover"
                   />
                   <button
-                    onClick={() => removerFavorito(produto.id)}
+                    onClick={() => removerFavorito(produto.produto_id)}
                     className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full bg-white shadow-md transition hover:scale-110 cursor-pointer"
                   >
                     <LuHeart size={22} className="text-red-500 fill-red-500" />

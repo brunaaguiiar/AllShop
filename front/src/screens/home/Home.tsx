@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { adicionarFavorito } from "../../services/favoritos";
 
 interface Categoria {
   nome: string;
@@ -52,7 +53,7 @@ export default function Home() {
   const [bannerAtual, setBannerAtual] = useState(0);
   const [favoritos, setFavoritos] = useState<number[]>([]);
   const [categoriaSelecionada, setCategoriaSelecionada] = useState("Todos");
-  const API_URL = "http://localhost:3000";
+  const API_URL = "http://localhost:3333";
 
   async function adicionarAoCarrinho(idProduto: number) {
     try {
@@ -81,8 +82,9 @@ export default function Home() {
 
   async function carregarProdutos() {
     try {
-      const response = await fetch(`${API_URL}/produtos`);
+      const response = await fetch(`${API_URL}/fornecedor/produtos`);
       const data = await response.json();
+      console.log(data);
 
       setProdutos(data);
     } catch (error) {
@@ -102,13 +104,20 @@ export default function Home() {
     return () => clearInterval(intervalo);
   }, [banners.length]);
 
-  const alternarFavorito = (id: number) => {
-    setFavoritos((favoritosAtuais) =>
-      favoritosAtuais.includes(id)
-        ? favoritosAtuais.filter((produtoId) => produtoId !== id)
-        : [...favoritosAtuais, id]
-    );
-  };
+  const alternarFavorito = async (id: number) => {
+  try {
+    if (favoritos.includes(id)) {
+      setFavoritos(favoritos.filter((produtoId) => produtoId !== id));
+    } else {
+      await adicionarFavorito(1, id);
+
+      setFavoritos([...favoritos, id]);
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Erro ao salvar favorito.");
+  }
+};
 
   const produtosFiltrados =
     categoriaSelecionada === "Todos"

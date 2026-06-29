@@ -1,12 +1,10 @@
 import { Router } from "express";
-import { FornecedorController } from "../controller/FornecedorController";
+import { ProdutoController } from "../controller/ProdutoController";
 
 const router = Router();
-const controller = new FornecedorController();
+const controller = new ProdutoController();
 
-router.get("/fornecedor/produtos", controller.listarProdutos);
-router.post("/fornecedor/produtos", controller.adicionarProduto);
-router.put("/fornecedor/produtos/:id", controller.editarProduto);
-router.delete("/fornecedor/produtos/:id", controller.removerProduto);
+router.get("/produtos", controller.listarProdutos);
+router.get("/categorias", controller.listarCategorias);
 
 export default router;

@@ -6,6 +6,7 @@ import fornecedorRoutes from "./src/routes/Fornecedor.routes"
 import interacaoRoutes from "./src/routes/Interacao.routes"
 import { carrinhoRoutes } from "./src/routes/Carrinho.routes";
 import { favoritoRoutes } from "src/routes/Favoritos.routes"
+import produtoRoutes from "./src/routes/Produto.routes"
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(pedidoRoutes)
 app.use(fornecedorRoutes)
 app.use("/api", favoritoRoutes);
 app.use(interacaoRoutes)
+app.use(produtoRoutes)
 
 app.use(carrinhoRoutes);
 app.use(favoritoRoutes);

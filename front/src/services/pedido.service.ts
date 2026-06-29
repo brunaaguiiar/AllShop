@@ -2,16 +2,8 @@ import axios from "axios"
 
 const API_URL = "http://localhost:3333"
 
-function obterIdUsuarioLogado(): number | null {
-  try {
-    const userJson = localStorage.getItem("@AllShop:user");
-    if (!userJson) return null;
-
-    const usuario = JSON.parse(userJson);
-    return usuario?.id ? Number(usuario.id) : null;
-  } catch {
-    return null
-  }
+function obterIdUsuarioLogado(): number {
+  return 1;
 }
 
 export const pedidoServiceFrontend = {

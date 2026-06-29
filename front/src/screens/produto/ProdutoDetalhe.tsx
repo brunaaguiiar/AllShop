@@ -1,103 +1,134 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
+
+const API_URL = "http://localhost:3333"
+
+interface Produto {
+  produto_id: number
+  nome: string
+  descricao?: string
+  preco: number
+  imagem?: string
+  estoque?: number
+  categoria?: {
+    nome: string
+  }
+}
+
+interface Comentario {
+  nome: string;
+  nota: number;
+  texto: string;
+}
 
 export default function ProdutoDetalhe() {
   const { id } = useParams();
 
-  const produtos = [
-    {
-      id: 1,
-      nome: "Notebook Gamer Lenovo LOQ",
-      imagem: "/imagens/notebook.png",
-      descricao:
-        "Notebook gamer com alto desempenho para jogos, estudos e trabalho.",
-      precoAntigo: "R$ 8.748,13",
-      preco: "R$ 5.949,00",
-      desconto: "-24%",
-    },
-  ]
-
-  const produto = produtos.find((item) => item.id === Number(id))
+  const [produto, setProduto] = useState<Produto | null>(null)
+  const [loading, setLoading] = useState(true);
 
   const [comentario, setComentario] = useState("")
-  const [nota, setNota] = useState(5);
-
-  const [comentarios, setComentarios] = useState([
+  const [nota, setNota] = useState(5)
+  const [comentarios, setComentarios] = useState<Comentario[]>([
     {
-      nome: "Usuário AllShop",
+      nome: "Cliente AllShop",
       nota: 5,
-      texto: "Produto muito bom, chegou rápido e bem embalado.",
+      texto: "Produto excelente, recomendo bastante.",
     },
   ])
 
-  if (!produto) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <h1 className="text-3xl font-bold">Produto não encontrado</h1>
-      </div>
-    );
-  }
+  useEffect(() => {
+    async function carregarProduto() {
+      try {
+        const response = await fetch(`${API_URL}/produtos/${id}`)
+
+        if (!response.ok) {
+          throw new Error("Produto não encontrado")
+        }
+
+        const data = await response.json()
+        setProduto(data)
+      } catch (error) {
+        console.error(error)
+        setProduto(null)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    carregarProduto();
+  }, [id])
 
   function enviarAvaliacao() {
-    if (!comentario.trim()) return;
+    if (!comentario.trim()) {
+      alert("Digite um comentário.");
+      return
+    }
 
-    setComentarios([
-      {
-        nome: "Você",
-        nota,
-        texto: comentario,
-      },
-      ...comentarios,
-    ]);
+    const novoComentario = {
+      nome: "Você",
+      nota,
+      texto: comentario,
+    }
 
+    setComentarios([novoComentario, ...comentarios])
     setComentario("")
     setNota(5)
   }
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-xl font-semibold">
+        Carregando produto...
+      </div>
+    );
+  }
+
+  if (!produto) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-2xl font-bold">
+        Produto não encontrado
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-gray-50 pt-28 px-4 md:px-8 pb-10">
+    <main className="min-h-screen bg-gray-50 px-4 md:px-8 py-28">
       <div className="max-w-7xl mx-auto">
-        <div className="bg-white rounded-3xl shadow-md p-6 md:p-10 grid md:grid-cols-2 gap-10">
-          <div className="bg-gray-100 rounded-3xl p-6 flex justify-center items-center">
+        <section className="bg-white rounded-3xl shadow-md p-6 md:p-10 grid md:grid-cols-2 gap-10">
+          <div className="bg-gray-100 rounded-3xl p-6 flex items-center justify-center">
             <img
-              src={produto.imagem}
+              src={produto.imagem || "/imagens/notebook.png"}
               alt={produto.nome}
-              className="max-h-[400px] object-contain hover:scale-105 transition"
+              className="max-h-[420px] object-contain hover:scale-105 transition duration-300"
             />
           </div>
-
-          <div>
+          <div className="flex flex-col justify-center">
+            <p className="text-orange-500 font-semibold mb-2">
+              {produto.categoria?.nome || "Produto"}
+            </p>
             <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
               {produto.nome}
             </h1>
-
             <p className="text-gray-500 mt-4 leading-relaxed">
-              {produto.descricao}
+              {produto.descricao || "Sem descrição"}
             </p>
-
-            <p className="line-through text-gray-400 mt-6">
-              {produto.precoAntigo}
-            </p>
-
-            <div className="flex items-center gap-4 mt-2">
-              <span className="text-4xl font-bold text-orange-500">
-                {produto.preco}
-              </span>
-
-              <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full font-semibold">
-                {produto.desconto}
-              </span>
+            <div className="mt-8">
+              <p className="text-4xl font-bold text-orange-500">
+                R$ {Number(produto.preco).toFixed(2)}
+              </p>
+              <p className="text-sm text-gray-500 mt-2">
+                Estoque: {produto.estoque}
+              </p>
             </div>
-
-            <button className="mt-8 w-full md:w-auto bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-2xl font-bold transition">
+            <button className="mt-8 w-full md:w-fit bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-2xl font-bold transition">
               Adicionar ao carrinho
             </button>
           </div>
-        </div>
+        </section>
 
-        <div className="bg-white rounded-3xl shadow-md p-6 md:p-8 mt-8">
+        <section className="bg-white rounded-3xl shadow-md p-6 md:p-8 mt-8">
           <h2 className="text-2xl font-bold mb-6">Avaliar produto</h2>
-
           <select
             value={nota}
             onChange={(e) => setNota(Number(e.target.value))}
@@ -109,32 +140,25 @@ export default function ProdutoDetalhe() {
             <option value={2}>⭐⭐</option>
             <option value={1}>⭐</option>
           </select>
-
           <textarea
             value={comentario}
             onChange={(e) => setComentario(e.target.value)}
             placeholder="Escreva sua avaliação..."
             className="w-full border rounded-2xl p-4 min-h-[140px]"
           />
-
           <button
             onClick={enviarAvaliacao}
             className="mt-4 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-bold"
           >
             Enviar avaliação
           </button>
-        </div>
-
-        <div className="bg-white rounded-3xl shadow-md p-6 md:p-8 mt-8">
+        </section>
+        <section className="bg-white rounded-3xl shadow-md p-6 md:p-8 mt-8">
           <h2 className="text-2xl font-bold mb-6">Comentários</h2>
-
           <div className="space-y-4">
             {comentarios.map((item, index) => (
-              <div
-                key={index}
-                className="border rounded-2xl p-4 bg-gray-50"
-              >
-                <div className="flex justify-between">
+              <div key={index} className="border rounded-2xl p-4 bg-gray-50">
+                <div className="flex justify-between items-center">
                   <strong>{item.nome}</strong>
                   <span>{"⭐".repeat(item.nota)}</span>
                 </div>
@@ -143,8 +167,8 @@ export default function ProdutoDetalhe() {
               </div>
             ))}
           </div>
-        </div>
+        </section>
       </div>
-    </div>
-  );
+    </main>
+  )
 }

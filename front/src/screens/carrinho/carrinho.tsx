@@ -1,9 +1,20 @@
-import { Button } from "@heroui/react";
+import {
+  Button,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Input,
+  RadioGroup,
+  Radio,
+  useDisclosure,
+} from "@heroui/react";
 import { useEffect, useMemo, useState } from "react";
 import { FiMinus, FiPlus, FiShoppingBag, FiTrash2 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
-const API_URL = "http://localhost:3000";
+const API_URL = "http://localhost:3333";
 
 type CartItem = {
   id: number;
@@ -22,8 +33,17 @@ const formatCurrency = (value: number) =>
 
 export default function Carrinho() {
   const navigate = useNavigate();
+  const [items, setItems] = useState<CartItem[]>([]);
 
- const [items, setItems] = useState<CartItem[]>([]);
+ const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+ const [cep, setCep] = useState("");
+ const [rua, setRua] = useState("");
+ const [numero, setNumero] = useState("");
+ const [bairro, setBairro] = useState("");
+ const [cidade, setCidade] = useState("");
+
+const [formaPagamento, setFormaPagamento] = useState("PIX");
 
  useEffect(() => {
   carregarCarrinho();
@@ -40,40 +60,13 @@ async function carregarCarrinho() {
     console.log(data);
 
     const produtos = data.item_carrinho.map((item: any) => ({
-      id: item.produto.produto_id,
-      name: item.produto.nome,
-      category: "Produto",
-      price: Number(item.produto.preco),
-      quantity: item.quantidade,
-    image:
-    item.produto.produto_id === 6
-    ? "/imagens/Console PlayStation 5 Slim.png"
-    : item.produto.produto_id === 7
-    ? "/imagens/Controle sem fio Dualsense Midnight.png"
-    : item.produto.produto_id === 8
-    ? "/imagens/Processador Ryzen 5 5600G.png"
-    : item.produto.produto_id === 9
-    ? "/imagens/PC Gamer Completo RGB Ryzen 5.png"
-    : item.produto.produto_id === 10
-    ? "/imagens/Water Cooler Rise Mode Gamer Black.png"
-    : item.produto.produto_id === 11
-    ? "/imagens/Mouse Gamer RGB.png"
-    : item.produto.produto_id === 12
-    ? "/imagens/Teclado Mecânico RGB.png"
-    : item.produto.produto_id === 13
-    ? "/imagens/Headset Gamer HyperX Cloud III.png"
-    : item.produto.produto_id === 14
-    ? "/imagens/Webcam Logitech C920.png"
-    : item.produto.produto_id === 15
-    ? "/imagens/Processador Intel Core Ultra 5.png"
-    : item.produto.produto_id === 16
-    ? "/imagens/Placa de Vídeo RTX 4060.png"
-    : item.produto.produto_id === 17
-    ? "/imagens/Memória RAM Kingston Fury 16GB.png"
-    : item.produto.produto_id === 18
-    ? "/imagens/SSD Kingston NV3 1TB.png"
-    : "/imagens/notebook.png",
-    }));
+     id: item.produto.produto_id,
+     name: item.produto.nome,
+     category: "Produto",
+     price: Number(item.produto.preco),
+     quantity: item.quantidade,
+     image: item.produto.imagem,
+}));
 
     setItems(produtos);
 
@@ -246,10 +239,11 @@ async function carregarCarrinho() {
             </div>
 
             <Button
-             onPress={async () => {
+               onPress={async () => {
                try {
+
                  const response = await fetch(
-                 "http://localhost:3000/carrinho/finalizar?id_usuario=1",
+                 "http://localhost:3333/carrinho/finalizar?id_usuario=1",
                 {
                  method: "POST",
                 }

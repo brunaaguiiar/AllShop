@@ -62,13 +62,50 @@ export class CarrinhoService {
   }
   async finalizarCompra(id_usuario: number) {
 
-    const carrinho = await prisma.carrinho.findFirst({
-      where: { id_usuario }
-    });
+  const carrinho = await prisma.carrinho.findFirst({
+    where: { id_usuario },
+    include: {
+      item_carrinho: {
+        include: {
+          produto: true,
+        },
+      },
+    },
+  });
 
-    if (!carrinho) {
-      throw new Error("Carrinho não encontrado");
-    }
+  if (!carrinho) {
+    throw new Error("Carrinho não encontrado");
+  }
+
+  if (carrinho.item_carrinho.length === 0) {
+    throw new Error("Carrinho vazio");
+  }
+
+  const valorTotal = carrinho.item_carrinho.reduce(
+    (total, item) =>
+      total + Number(item.produto.preco) * item.quantidade,
+    0
+  );
+
+  await prisma.pedido.create({
+    data: {
+      usuario_id: id_usuario,
+      endereco_id: 1,
+      forma_pagamento: "PIX",
+      valor_total: valorTotal,
+      status: "ENTREGUE",
+
+      item_pedido: {
+        create: carrinho.item_carrinho.map((item) => ({
+          produto_id: item.id_produto,
+          quantidade: item.quantidade,
+          preco_unitario: item.produto.preco,
+          subtotal:
+            Number(item.produto.preco) * item.quantidade,
+        })),
+      },
+    },
+  });
 
     await prisma.item_carrinho.deleteMany({
       where: {

@@ -151,7 +151,7 @@ export default function MeusPedidos() {
                           {item.quantidade}x <span className="font-medium text-gray-800">{item.produto?.nome}</span>
                         </span>
                         <span className="text-gray-500">
-                          R$ {item.subtotal.toFixed(2).replace(".", ",")}
+                          R$ {Number(item.subtotal).toFixed(2).replace(".", ",")}
                         </span>
                       </div>
                     ))}
