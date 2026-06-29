@@ -7,6 +7,7 @@ import interacaoRoutes from "./src/routes/Interacao.routes"
 import { carrinhoRoutes } from "./src/routes/Carrinho.routes";
 import { favoritoRoutes } from "src/routes/Favoritos.routes"
 
+
 const app = express();
 
 app.use(cors())
